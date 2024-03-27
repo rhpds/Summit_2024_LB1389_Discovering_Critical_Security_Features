@@ -1,0 +1,117 @@
+:GUID: %GUID%
+:USERNAME: %USERNAME%
+
+:BASTION_PASSWORD: %BASTION_PASSWORD%
+:BASTION_IP_ADDRESS: %BASTION_IP_ADDRESS%
+
+:OPENSCAP_PASSWORD: %OPENSCAP_PASSWORD%
+:OPENSCAP_IP_ADDRESS: %OPENSCAP_IP_ADDRESS%
+
+:IDMSERVER_PASSWORD: %IDMSERVER_PASSWORD%
+:IDMSERVER_IP_ADDRESS: %IDMSERVER_IP_ADDRESS%
+:markup-in-source: verbatim,attributes,quotes
+:show_solution: true
+
+:sectnums: true
+:toc: true
+
+:toc2:
+
+=== Using the Terminal to Access the Remote Shell
+
+. To connect to your environment, first execute the below SSH command in the terminal:
++
+[%nowrap]
+----
+ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+----
+
+TIP: Use `Ctrl+Shift+V` to paste in the terminal.
+
+. Answer `yes` to accept server's identity if asked, and then input the following password:
++
+[%nowrap]
+----
+%BASTION_PASSWORD%
+----
+
+. If everything works correctly, you end up in the lab's system shell.
++
+[%nowrap]
+----
+[... ~]$ pwd
+/home/%USERNAME%
+[... ~]$ cat /etc/passwd
+...
+%USERNAME%:x:1000:100:GTPE Student:/home/%USERNAME%:/bin/bash
+----
+
+Congratulations, now you are in your *text console*.
+
+// .Additional group information:
+// [%collapsible,%nowrap,%hardbreaks]
+// ======
+// %GROUPS%
+// ======
+
+ifndef::gitlab_hosted[]
+TIP: You can resize this window vertically to increase the documentation or the terminal space. Just drag and move left or right using the vertical bar: image:0-01-resize_window.png[window=_blank,link=0-01-resize_window.png,300,300]
+
+TIP: You can also open a dedicated documentation or terminal window by activating the menu in the top right corner as illustrated by the following image: image:0-01-workshop-menu.png[window=_blank,link=0-01-workshop-menu.png,300,300]
+endif::[]
+
+=== Lab-Related Tips
+
+This section contains various tips that may be useful to keep in mind as you are doing the lab exercises.
+
+
+==== Command Listings
+
+Shell session listings obey the following conventions:
+
+[%nowrap]
+----
+[... ~]$ pwd
+/home/%USERNAME%
+[... ~]$ cat /etc/passwd
+...
+%USERNAME%:x:1000:1000:GTPE Student:/home/%USERNAME%:/bin/bash
+----
+
+- Commands such as `pwd` and `cat /etc/passwd` in this example are prefixed by `[...`, followed by the respective directory name and `]$`.
+For reference, in the actual terminal, commands are prefixed also by the current username and hostname--for example, `[{USERNAME}@<hostname> ~]$`.
+- Lines that follow commands and are not commands themselves represent the last command's output.
+In the example above, the output of the `ls` command in the `labs` directory is a list of directories with lab exercises.
+- Ellipses may be used to indicate multiple output lines that have been omitted because they are of no interest.
+In the example above, the output of the `cat /etc/passwd` command contains many lines with the line containing %USERNAME%'s entry emphasized by an ellipsis.
+
+
+==== Copy and Paste Conventions
+
+Normally, when you select text you want to copy in the document, you press `Ctrl+C` to copy it to the system clipboard, and you paste it from the clipboard to the editor using `Ctrl+V`.
+
+Keep in mind that when you paste to the **terminal console** or **terminal editor**, you have to use `Ctrl+Shift+V` instead of `Ctrl+V`.
+The same applies when copying from the Terminal window--you have to use `Ctrl+Shift+C` after selecting the text, not just `Ctrl+C`.
+
+
+==== Browser Searches
+
+When you search for an occurrence of text in the Firefox browser, you have the following options:
+
+- Pressing `Ctrl+F`, which brings up the search window.
+- Clicking the "hamburger menu" at the top right corner, and clicking the `Find in This Page` entry.
+This is the same as the previous option, but it is useful if you have problems with the keyboard shortcut.
++
+image:0-04-find_in_page.png[window=_blank,link=0-04-find_in_page.png,600,600]
+
+- If the browser has the link:https://addons.mozilla.org/en-US/firefox/addon/find-in-page-with-preview/[Find in Page^] extension installed, there is a blue icon close to the "hamburger menu" at the top right corner of the browser.
+You can click it and start typing the text to search for.
+The extension displays previews of the web page next to occurrences of the expression.
++
+image:0-05-supersearch.png[window=_blank,link=0-05-supersearch.png,600,600]
+
+=== Read everything!
+
+This lab has been designed for you to learn how things work from top to bottom. This means there are lots of descriptions and reading, not just commands for you to copy and paste! If you just copy and paste all the commands you can be done in 30 minutes... but you won’t learn anything!
+
+You have plenty of time to complete the lab, take it slow and read everything. If you get stuck, don’t be afraid to ask for help at any time, but the answer is probably in the lab documentation.
