@@ -1,12 +1,12 @@
 :data-uri:
-:favicon: favicon.ico 
+:favicon: favicon.ico
 :toc: left
 :sectanchors: true
 :sectlinks: true
 :sectnums: true
 :encoding: UTF-8
 
-= Defend Yourself Using Built-in Red Hat Enterprise Linux Security Technologies
+= Discovering Critical Security Features in Red Hat Enterprise Linux
 
 == Workshop Introduction
 include::lab0_frontpage.adoc[]
