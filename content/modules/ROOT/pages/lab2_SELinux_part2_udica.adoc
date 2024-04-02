@@ -28,7 +28,7 @@ Udica creates a policy which combines templates using rules inherited from a spe
 For more information, please visit https://www.redhat.com/en/blog/generate-selinux-policies-containers-with-udica[Red Hat Security Blog].
 
 === Installing the udica and podman
-In this section, you  need to log in to the *rhel8selinux1.{GUID}.internal* system and required packages.
+In this section, you  need to log in to the *selinux1.{GUID}.internal* system and required packages.
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
@@ -46,19 +46,19 @@ ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
 %BASTION_PASSWORD%
 ----
 
-. Log in to the *rhel8selinux1.{GUID}.internal* host:
+. Log in to the *selinux1.{GUID}.internal* host:
 +
 [%nowrap]
 ----
-[localhost ~]$ ssh rhel8selinux1.%GUID%.internal
+[localhost ~]$ ssh selinux1.%GUID%.internal
 ----
 
 . Log as root
 +
 [%nowrap]
 ----
-[%USERNAME%@rhel8selinux1]$ sudo -i
-[root@rhel8selinux1]
+[%USERNAME%@selinux1]$ sudo -i
+[root@selinux1]
 ----
 
 NOTE: Repeat steps #1-2 above on a second terminal (this terminal window will also be connected to *rhel8selinux1.%GUID%.internal*) via bookbag (click in top right corner for new terminal)
@@ -66,14 +66,14 @@ NOTE: Repeat steps #1-2 above on a second terminal (this terminal window will al
 The first step is to install udica and container runtime engine, in this case the _podman_ engine will be used, and the rest of dependencies.
 
 ----
-[root@rhel8selinux1]# dnf install -y udica podman setools-console container-selinux
+[root@selinux1]# dnf install -y udica podman setools-console container-selinux
 ----
 
 Then, make sure that SELinux is in Enforcing mode.
 
 ----
-[root@rhel8selinux1]# setenforce 1
-[root@rhel8selinux1]# getenforce
+[root@selinux1]# setenforce 1
+[root@selinux1]# getenforce
 Enforcing
 ----
 
@@ -82,7 +82,7 @@ Enforcing
 Let's use podman to start container with following parameters:
 
 ----
-[root@rhel8selinux1]# podman run -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi8 bash
+[root@selinux1]# podman run -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi9 bash
 ----
 
  - Container will bind mount /home with read only perms
@@ -114,27 +114,30 @@ The container runs with **container_t** type and **c447,c628** categories(catego
 NOTE: Please run following commands in second opened terminal
 
 ----
-[root@rhel8selinux1]# ps -efZ | grep container_t
+[root@selinux1]# ps -efZ | grep container_t
 system_u:system_r:container_t:s0:c447,c628 root 15361 15350  0 15:15 pts/0 00:00:00 bash
 ----
 
 ----
-[root@rhel8selinux1]# sesearch -A -s container_t -t home_root_t -c dir -p read
-[root@rhel8selinux1]#
-[root@rhel8selinux1]# sesearch -A -s container_t -t var_spool_t -c dir -p read
-[root@rhel8selinux1]#
+[root@selinux1]# sesearch -A -s container_t -t home_root_t -c dir -p read
+[root@selinux1]#
+[root@selinux1]# sesearch -A -s container_t -t var_spool_t -c dir -p read
+[root@selinux1]#
 ----
 
 On the other hand, what is completely allowed is network access.
 
 ----
-[root@rhel8selinux1]# sesearch -A -s container_t -t port_type -c tcp_socket
+[root@selinux1]# sesearch -A -s container_t -t port_type -c tcp_socket
 allow container_net_domain port_type:tcp_socket { name_bind name_connect recv_msg send_msg };
+allow corenet_unconfined_type port_type:tcp_socket { name_bind name_connect recv_msg send_msg };
 allow sandbox_net_domain port_type:tcp_socket { name_bind name_connect recv_msg send_msg };
 
-[root@rhel8selinux1]# sesearch -A -s container_t -t port_type -c udp_socket
+[root@selinux1]# sesearch -A -s container_t -t port_type -c udp_socket
 allow container_net_domain port_type:udp_socket { name_bind recv_msg send_msg };
+allow corenet_unconfined_type port_type:udp_socket { name_bind recv_msg send_msg };
 allow sandbox_net_domain port_type:udp_socket { name_bind recv_msg send_msg };
+
 ----
 
 It would be great to restrict this access and allow the container to only bind on tcp port *21*.
@@ -146,9 +149,9 @@ To create a policy for the container, it's necessary to have running container f
 Let's find container's id using the *podman ps* command:
 
 ----
-[root@rhel8selinux1]# podman ps
+[root@selinux1]# podman ps
 CONTAINER ID   IMAGE                             COMMAND   CREATED          STATUS              PORTS   NAMES
-37a3635afb8f   registry.access.redhat.com/ubi8:latest   bash      15 minutes ago   Up 15 minutes ago           heuristic_lewin
+37a3635afb8f   registry.access.redhat.com/ubi9:latest   bash      15 minutes ago   Up 15 minutes ago           heuristic_lewin
 ----
 
 The container ID is **37a3635afb8f**. (Your container ID will be different, please use yours.)
@@ -156,14 +159,15 @@ The container ID is **37a3635afb8f**. (Your container ID will be different, plea
 To create policy for it the **udica** tool can be used. The container will be inspected by running *podman inspect*. Udica takes one parameter which is name of created SELinux security policy.
 
 ----
-[root@rhel8selinux1]# podman inspect 37a3635afb8f | udica my_container
+[root@selinux1]# podman inspect 37a3635afb8f | udica my_container
 
-Policy my_container with container id 37a3635afb8f created!
+Policy my_container created!
 
 Please load these modules using:
-[root@rhel8selinux1]# semodule -i my_container.cil /usr/share/udica/templates/{base_container.cil,net_container.cil,home_container.cil}
+# semodule -i my_container.cil /usr/share/udica/templates/{base_container.cil,net_container.cil,home_container.cil}
 
 Restart the container with: "--security-opt label=type:my_container.process" parameter
+
 ----
 
 Policy is generated. Let's follow the instructions from the output to install generated SELinux policy:
@@ -176,15 +180,15 @@ Let's exit the running container and start new one.
 
 ----
 [root@37a3635afb8f spool]# exit
-[root@rhel8selinux1]# podman run --security-opt label=type:my_container.process -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi8 bash
+[root@selinux1]# podman run --security-opt label=type:my_container.process -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi9 bash
 ----
 
 The container is now running with **my_container.process** type:
 
 ----
-[root@rhel8selinux1]# ps -efZ | grep my_container.process
-unconfined_u:system_r:container_runtime_t:s0-s0:c0.c1023 root 2275 434  1 13:49 pts/1 00:00:00 podman run --security-opt label=type:my_container.process -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi8 bash
-system_u:system_r:my_container.process:s0:c270,c963 root 2317 2305  0 13:49 pts/0 00:00:00 bash
+[root@selinux1]# ps -efZ | grep my_container.process
+unconfined_u:unconfined_r:container_runtime_t:s0-s0:c0.c1023 root 29039 28639  3 17:30 pts/1 00:00:00 podman run --security-opt label=type:my_container.process -v /home:/home:ro -v /var/spool:/var/spool:rw -p 21:21 -it ubi9 bash
+system_u:system_r:my_container.process:s0:c19,c850 root 29106 29104  0 17:30 pts/0 00:00:00 bash
 ----
 
 Proof that SELinux is now allowing access to */home* and */var/spool* mount points:
