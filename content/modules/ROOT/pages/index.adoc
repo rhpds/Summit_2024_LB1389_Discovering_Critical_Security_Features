@@ -35,7 +35,7 @@ include::lab4_IPsec.adoc[]
 == Lab5: USBGuard
 include::lab5_USBGuard.adoc[]
 
-== Lab6: Auditing on Red Hat Enterprise Linux 8
+== Lab6: Auditing on Red Hat Enterprise Linux 9
 include::lab6_Audit.adoc[]
 
 == Lab7: Advanced Intrusion Detection Environment (AIDE)
