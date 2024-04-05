@@ -19,7 +19,7 @@
 === Introduction
 The Linux Audit System provides a way to track security-relevant information on your system. Based on preconfigured rules, Audit generates log entries to record as much information as possible about the events happening on your system. This information is crucial for mission-critical environments to determine any violations of security policy and what actions the violator performed. Audit does not provide additional security to your system; rather, it can be used to discover violations of security policies used on your system. These violations can be prevented by additional security measures such as SELinux.
 
-The lab is performed on a system installed with Red Hat Enterprise Linux 8 and may require modification to work in other lab environments.
+The lab is performed on a system installed with Red Hat Enterprise Linux 9 and may require modification to work in other lab environments.
 
 === Accessing the Audit Lab System
 
@@ -166,11 +166,11 @@ Technical Implementation Guide (STIG) for Red Hat Enterprise Linux.
 pre-defined audit filters:
 +
 ----
-[root@audit ~]# cat /usr/share/doc/audit/rules/README-rules
+[root@audit ~]# cat /usr/share/audit/sample-rules/README-rules
 [root@audit ~]# rm /etc/audit/rules.d/*
-[root@audit ~]# cp /usr/share/doc/audit/rules/10-base-config.rules /etc/audit/rules.d
-[root@audit ~]# cp /usr/share/doc/audit/rules/30-stig.rules /etc/audit/rules.d
-[root@audit ~]# cp /usr/share/doc/audit/rules/99-finalize.rules /etc/audit/rules.d
+[root@audit ~]# cp /usr/share/audit/sample-rules/10-base-config.rules /etc/audit/rules.d
+[root@audit ~]# cp /usr/share/audit/sample-rules/30-stig.rules /etc/audit/rules.d
+[root@audit ~]# cp /usr/share/audit/sample-rules/99-finalize.rules /etc/audit/rules.d
 [root@audit ~]# augenrules --load
 ----
 +
