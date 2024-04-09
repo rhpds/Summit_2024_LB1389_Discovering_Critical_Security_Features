@@ -32,7 +32,7 @@ In this section, you  need to log in to the *selinux1.{GUID}.internal* system an
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
 ----
@@ -41,21 +41,21 @@ ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 %BASTION_PASSWORD%
 ----
 
 . Log in to the *selinux1.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [localhost ~]$ ssh selinux1.%GUID%.internal
 ----
 
 . Log as root
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [%USERNAME%@selinux1]$ sudo -i
 [root@selinux1]
