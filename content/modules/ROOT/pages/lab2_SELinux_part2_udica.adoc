@@ -34,7 +34,7 @@ In this section, you  need to log in to the *selinux1.{GUID}.internal* system an
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" "{USERNAME}"@"{BASTION_IP_ADDRESS}"
+ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
 ----
 
     TIP: Use `Ctrl+Shift+V` to paste in the terminal.
@@ -43,21 +43,21 @@ ssh -o "ServerAliveInterval 30" "{USERNAME}"@"{BASTION_IP_ADDRESS}"
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-"{BASTION_PASSWORD}"
+%BASTION_PASSWORD%
 ----
 
 . Log in to the *selinux1.{GUID}.internal* host:
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[localhost ~]$ ssh selinux1."{GUID}".internal
+[localhost ~]$ ssh selinux1.%GUID%.internal
 ----
 
 . Log as root
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-["{USERNAME}"@selinux1]$ sudo -i
+[%USERNAME%@selinux1]$ sudo -i
 [root@selinux1]
 ----
 
