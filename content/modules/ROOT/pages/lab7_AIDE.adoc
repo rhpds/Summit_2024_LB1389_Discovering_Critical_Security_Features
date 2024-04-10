@@ -53,10 +53,10 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 [{USERNAME}@bastion ~]$ ssh aide.{GUID}.internal
 ----
 
-All of the exercises in this lab are run on the *aide.%GUID%.internal* host,
+All of the exercises in this lab are run on the *aide.{GUID}.internal* host,
 as the *root* user:
 
-* To get to *root* user prompt on *aide.%GUID%.internal*:
+* To get to *root* user prompt on *aide.{GUID}.internal*:
 +
 ----
 [{USERNAME}@aide ~]$ sudo su -
@@ -388,7 +388,7 @@ Connection to aide.{GUID}.internal closed by remote host.
 Connection to aide.{GUID}.internal closed.
 ----
 
-. Log in again to the *aide.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
+. Log in again to the *aide.{GUID}.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----

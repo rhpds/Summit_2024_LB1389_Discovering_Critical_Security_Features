@@ -46,29 +46,29 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 [{USERNAME}@bastion ~]$ ssh audit.{GUID}.internal
 ----
 
-All of the exercises in this lab are run on the *audit.%GUID%.internal* host,
-either as the *root* or *%USERNAME%* user. In each section, you are instructed which user to use. The username is reflected in the command prompt as shown here:
+All of the exercises in this lab are run on the *audit.{GUID}.internal* host,
+either as the *root* or *{USERNAME}* user. In each section, you are instructed which user to use. The username is reflected in the command prompt as shown here:
 
-* The *%USERNAME%* user prompt on *audit.%GUID%.internal*:
+* The *{USERNAME}* user prompt on *audit.{GUID}.internal*:
 +
 ----
 [{USERNAME}@audit ~]$
 ----
 
-* The *root* user prompt on *audit.%GUID%.internal*:
+* The *root* user prompt on *audit.{GUID}.internal*:
 +
 ----
 [root@audit ~]#
 ----
 
-. To switch user from %USERNAME% to *root*, use *sudo* command:
+. To switch user from {USERNAME} to *root*, use *sudo* command:
 +
 ----
 [{USERNAME}@audit ~]$ sudo su -
 [root@audit ~]#
 ----
 
-. You can open second terminal using "burger" icon in top right corner of the lab environment, and selecting *open terminal*. You can then repeat connection steps there as well, and leave one terminal as *%USERNAME%* and second as *root* to avoid exiting your root session.
+. You can open second terminal using "burger" icon in top right corner of the lab environment, and selecting *open terminal*. You can then repeat connection steps there as well, and leave one terminal as *{USERNAME}* and second as *root* to avoid exiting your root session.
 
 === Configuring the Audit Daemon and Kernel
 
@@ -162,7 +162,7 @@ In this section, you enable some basic audit filters designed to help
 administrators meet the U.S. Department of Defense Security
 Technical Implementation Guide (STIG) for Red Hat Enterprise Linux.
 
-. While logged in to the *audit.%GUID%.internal* system as *root*, enable a number of
+. While logged in to the *audit.{GUID}.internal* system as *root*, enable a number of
 pre-defined audit filters:
 +
 ----
@@ -228,7 +228,7 @@ a common way to add audit filter rules; it adds a filter rule to be executed at
 link:http://man7.org/linux/man-pages/man8/auditctl.8.html[auditctl(8)^] man page for
 more detail.)
 
-. While logged into the *audit.%GUID%.internal* system as *root*, add a custom audit
+. While logged into the *audit.{GUID}.internal* system as *root*, add a custom audit
 filter for the `/usr/bin/ping` application (warning message might print out - it does not matter for our demo):
 +
 ----
@@ -303,21 +303,21 @@ the system is configured as described earlier in this lab.
 
 ==== Generating Audit Events
 
-. This part will be performed as %USERNAME%, so you can either switch to second terminal with this user, or you can press *CTRL+D* or use *exit* command to leave *root* session.
+. This part will be performed as {USERNAME}, so you can either switch to second terminal with this user, or you can press *CTRL+D* or use *exit* command to leave *root* session.
 
 . Run the following commands to generate some interesting events in the audit log:
 +
 ----
-[%USERNAME%@audit ~]$ vi /etc/shadow
+[{USERNAME}@audit ~]$ vi /etc/shadow
 (Type :q! to exit vi)
 ----
 +
 ----
-[%USERNAME%@audit ~]$ ping -c 1 127.0.0.1
+[{USERNAME}@audit ~]$ ping -c 1 127.0.0.1
 ----
 +
 ----
-[%USERNAME%@audit ~]$ vi ~/project_tps_report.txt
+[{USERNAME}@audit ~]$ vi ~/project_tps_report.txt
 (Type: i to go into insert mode)
 (Type: This is my TPS report)
 (Press *Esc*)
@@ -325,7 +325,7 @@ the system is configured as described earlier in this lab.
 ----
 +
 ----
-[%USERNAME%@audit ~]$ chmod 0664 ~/project_tps_report.txt
+[{USERNAME}@audit ~]$ chmod 0664 ~/project_tps_report.txt
 ----
 
 ==== Searching for Events
@@ -341,7 +341,7 @@ The `--start` option specifies at what point in the audit logs to start searchin
 `-m` option indicates that you are interested in audit events with the given
 record type.
 
-. While logged into the *audit.%GUID%.internal* system as *root*, examine the login events on the test system:
+. While logged into the *audit.{GUID}.internal* system as *root*, examine the login events on the test system:
 +
 ----
 [root@audit ~]# ausearch --start today -m USER_LOGIN
@@ -372,10 +372,10 @@ assigned to an audit rule.
 +
 This command lists any events triggered by the pre-defined rules with the `access` key, and the `-i` interpretation option makes the `proctitle` field readable in the output.
 
-. As *root*, display today's events from the *%USERNAME%* user that match the `perm_mod` key:
+. As *root*, display today's events from the *{USERNAME}* user that match the `perm_mod` key:
 +
 ----
-[root@audit ~]# ausearch --start today -i -k perm_mod --uid %USERNAME%
+[root@audit ~]# ausearch --start today -i -k perm_mod --uid {USERNAME}
 ----
 +
 The `--uid` option searches for events that match the given UID.
@@ -408,7 +408,7 @@ generate a number of reports from the audit log: `aureport`, `aulast`, and
 all of which are described in the
 link:http://man7.org/linux/man-pages/man8/aureport.8.html[aureport(8)^] man page.
 
-. While logged into the *audit.%GUID%.internal* system as *root*, run the following
+. While logged into the *audit.{GUID}.internal* system as *root*, run the following
 commands to create several audit reports for today's activity:
 +
 ----
@@ -469,7 +469,7 @@ The `--format` option, as well as several others that can customize the output
 of `ausearch`, can be found in the
 link:http://man7.org/linux/man-pages/man8/ausearch.8.html[ausearch(8)^] man page.
 
-. While logged into the *audit.%GUID%.internal* system as *root*, view samples of the `csv` and `text` formats:
+. While logged into the *audit.{GUID}.internal* system as *root*, view samples of the `csv` and `text` formats:
 +
 ----
 [root@audit ~]# ausearch --start today --format csv
@@ -482,7 +482,7 @@ Comma Separated Values (CSV) format.
 
 === Resetting the Lab System (Optional)
 
-. If you want to restart the lab from scratch, run the following as *root* on *audit.%GUID%.internal*:
+. If you want to restart the lab from scratch, run the following as *root* on *audit.{GUID}.internal*:
 +
 ----
 [root@audit ~]# rm /etc/audit/rules.d/*

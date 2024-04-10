@@ -83,7 +83,7 @@ For reference, in the actual terminal, commands are prefixed also by the current
 - Lines that follow commands and are not commands themselves represent the last command's output.
 In the example above, the output of the `ls` command in the `labs` directory is a list of directories with lab exercises.
 - Ellipses may be used to indicate multiple output lines that have been omitted because they are of no interest.
-In the example above, the output of the `cat /etc/passwd` command contains many lines with the line containing %USERNAME%'s entry emphasized by an ellipsis.
+In the example above, the output of the `cat /etc/passwd` command contains many lines with the line containing {USERNAME}'s entry emphasized by an ellipsis.
 
 
 ==== Copy and Paste Conventions

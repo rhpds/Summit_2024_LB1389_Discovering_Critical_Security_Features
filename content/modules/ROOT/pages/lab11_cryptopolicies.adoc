@@ -56,10 +56,10 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 [{USERNAME}@bastion ~]$ ssh cryptopolicies.{GUID}.internal
 ----
 
-All of the exercises in this lab are run on the *cryptopolicies.%GUID%.internal* host,
+All of the exercises in this lab are run on the *cryptopolicies.{GUID}.internal* host,
 as the *root* user:
 
-* To get to *root* user prompt on *cryptopolicies.%GUID%.internal*:
+* To get to *root* user prompt on *cryptopolicies.{GUID}.internal*:
 +
 ----
 [{USERNAME}@cryptopolicies ~]$ sudo su -
@@ -158,7 +158,7 @@ Connection to cryptopolicies.{GUID}.internal closed by remote host.
 Connection to cryptopolicies.{GUID}.internal closed.
 ----
 
-. Log in again to the *cryptopolicies.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
+. Log in again to the *cryptopolicies.{GUID}.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
