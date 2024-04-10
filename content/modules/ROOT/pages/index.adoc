@@ -32,8 +32,8 @@ include::lab3_NBDE.adoc[]
 == Lab4: Cloud Encryption Using RHEL Opportunistic IPsec
 include::lab4_IPsec.adoc[]
 
-== Lab5: USBGuard
-include::lab5_USBGuard.adoc[]
+// == Lab5: USBGuard
+// include::lab5_USBGuard.adoc[]
 
 == Lab6: Auditing on Red Hat Enterprise Linux 9
 include::lab6_Audit.adoc[]
