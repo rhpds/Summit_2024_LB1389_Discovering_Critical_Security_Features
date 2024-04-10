@@ -50,25 +50,25 @@ for *audit.example.com* and *usbguard.example.com*. All your actions are run as 
 
 . If you are not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *ipsec1.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh ec2-user@ipsec1.%GUID%.internal
+[{USERNAME}@bastion ~]$ ssh ec2-user@ipsec1.{GUID}.internal
 ----
 
 . Use the sudo command to become root:
@@ -229,26 +229,26 @@ certificate onto *ipsec2.{GUID}.internal* via the bastion host.
 . If on the *ipsec1.{GUID}.internal* machine, logout to get back to the bastion host. Otherwise log in to
 the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 . Then copy the ipsec2 certificate from ipsec1 to ipsec2:
 
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ scp ec2-user@ipsec1.%GUID%.internal:/tmp/ipsec2.example.com.p12 /tmp
-[%USERNAME%@bastion ~]$ scp /tmp/ipsec2.example.com.p12 ec2-user@ipsec2.%GUID%.internal:/tmp
+[{USERNAME}@bastion ~]$ scp ec2-user@ipsec1.{GUID}.internal:/tmp/ipsec2.example.com.p12 /tmp
+[{USERNAME}@bastion ~]$ scp /tmp/ipsec2.example.com.p12 ec2-user@ipsec2.{GUID}.internal:/tmp
 ----
 
 . Install `libreswan`, import the certificate on *ipsec2.example.com*, and configure it for Opportunistic IPsec:
 
 . Log in to the *ipsec2.{GUID}.internal* host as *root*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh ec2-user@ipsec2.%GUID%.internal
+[{USERNAME}@bastion ~]$ ssh ec2-user@ipsec2.{GUID}.internal
 ----
 +
 ----
@@ -304,7 +304,7 @@ First, you start the IPsec subsystem on both of the hosts.
 
 . On *ipsec1.{GUID}.internal*, `ping` *ipsec2.{GUID}.internal* from *ipsec1.{GUID}.internal* to trigger an IPsec tunnel:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [root@ipsec1 ~]# ping -c3 *ipsec2.{GUID}.internal*
 ----

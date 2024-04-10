@@ -35,25 +35,25 @@ You use two tools, `curl` and `wget`, because they use two different cryptograph
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *cryptopolicies.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh cryptopolicies.%GUID%.internal
+[{USERNAME}@bastion ~]$ ssh cryptopolicies.{GUID}.internal
 ----
 
 All of the exercises in this lab are run on the *cryptopolicies.%GUID%.internal* host,
@@ -62,7 +62,7 @@ as the *root* user:
 * To get to *root* user prompt on *cryptopolicies.%GUID%.internal*:
 +
 ----
-[%USERNAME%@cryptopolicies ~]$ sudo su -
+[{USERNAME}@cryptopolicies ~]$ sudo su -
 [root@cryptopolicies ~]#
 ----
 
@@ -153,15 +153,15 @@ Please reboot the system for the setting to take effect.
 +
 ----
 [root@cryptopolicies ~]# reboot
-Connection to cryptopolicies.%GUID%.internal closed by remote host.
-Connection to cryptopolicies.%GUID%.internal closed.
+Connection to cryptopolicies.{GUID}.internal closed by remote host.
+Connection to cryptopolicies.{GUID}.internal closed.
 ----
 
 . Log in again to the *cryptopolicies.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
 ----
-[%USERNAME%@bastion ~]$ ssh cryptopolicies.%GUID%.internal
-[%USERNAME%@cryptopolicies ~]$ sudo su -
+[{USERNAME}@bastion ~]$ ssh cryptopolicies.{GUID}.internal
+[{USERNAME}@cryptopolicies ~]$ sudo su -
 [root@cryptopolicies ~]#
 ----
 

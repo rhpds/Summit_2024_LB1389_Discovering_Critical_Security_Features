@@ -86,9 +86,9 @@ image:session_recording_terminal.png[window=_blank,link=session_recording_termin
 
 . Use SSH to log in to the same machine, using *session1* as the password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[user@localhost]# ssh q@%SESSIONRECORDING_IP_ADDRESS%
+[user@localhost]# ssh q@{SESSIONRECORDING_IP_ADDRESS}
 ----
 +
 image:session_recording_terminal1.png[window=_blank,link=session_recording_terminal1.png]
@@ -101,7 +101,7 @@ Remember that this session is being recorded. Later, you can try to resize the s
 
 . Launch GNU Midnight Commander (`mc`):
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [q@sessionrecording]$ mc
 ----

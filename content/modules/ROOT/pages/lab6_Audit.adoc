@@ -25,25 +25,25 @@ The lab is performed on a system installed with Red Hat Enterprise Linux 9 and m
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *audit.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh audit.%GUID%.internal
+[{USERNAME}@bastion ~]$ ssh audit.{GUID}.internal
 ----
 
 All of the exercises in this lab are run on the *audit.%GUID%.internal* host,
@@ -52,7 +52,7 @@ either as the *root* or *%USERNAME%* user. In each section, you are instructed w
 * The *%USERNAME%* user prompt on *audit.%GUID%.internal*:
 +
 ----
-[%USERNAME%@audit ~]$
+[{USERNAME}@audit ~]$
 ----
 
 * The *root* user prompt on *audit.%GUID%.internal*:
@@ -64,7 +64,7 @@ either as the *root* or *%USERNAME%* user. In each section, you are instructed w
 . To switch user from %USERNAME% to *root*, use *sudo* command:
 +
 ----
-[%USERNAME%@audit ~]$ sudo su -
+[{USERNAME}@audit ~]$ sudo su -
 [root@audit ~]#
 ----
 

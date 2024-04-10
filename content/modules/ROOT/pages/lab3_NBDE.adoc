@@ -28,9 +28,10 @@ You install the *Tang* server on the *NBDE1* server and the Clevis client on *NB
 
 . Log in to the *NBDE1* server as *ec2-user*, and switch users, using sudo, to *root*. If you need the *root* password, it is *r3dh4t1!*. If you are prompted for the disk decryption password, it is also *r3dh4t1!*.
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion 0 ~]$ ssh nbde1.%GUID%.internal
-[%USERNAME%@nbde1 ~]$ sudo su -
+[{USERNAME}@bastion 0 ~]$ ssh nbde1.{GUID}.internal
+[{USERNAME}@nbde1 ~]$ sudo su -
 ----
 +
 
@@ -53,9 +54,10 @@ Because `tangd` uses the `systemd` socket activation mechanism, the server start
 
 . Log out of the *NBDE1* server.
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [root@nbde1 ~]# exit
-[%USERNAME%@nbde1 ~]$ exit
+[{USERNAME}@nbde1 ~]$ exit
 ----
 
 === Installing the Clevis Client
@@ -63,23 +65,24 @@ Your *NBDE3* client is already encrypted. In this section, you install the clien
 
 . Log in to the *NBDE3* server as *ec2-user*, and switch users, using sudo, to *root*. If you need the *root* password, it is *r3dh4t1!*. If you are prompted for the disk decryption password, it is also *r3dh4t1!*.
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion 0 ~]$ ssh nbde3.%GUID%.internal
-[%USERNAME%@nbde3 ~]$ sudo su -
+[{USERNAME}@bastion 0 ~]$ ssh nbde3.{GUID}.internal
+[{USERNAME}@nbde3 ~]$ sudo su -
 ----
 
 [NOTE]
 =====
-If you get an error like the following when trying to ssh into `nbde3.%GUID%.internal` follow the steps below and resume the lab steps.
+If you get an error like the following when trying to ssh into `nbde3.{GUID}.internal` follow the steps below and resume the lab steps.
 
-    [%USERNAME%@bastion ~]$ ssh nbde3.%GUID%.internal
-    %USERNAME%@nbde3.%GUID%.internal: Permission denied (publickey).
+    [{USERNAME}@bastion ~]$ ssh nbde3.{GUID}.internal
+    {USERNAME}@nbde3.{GUID}.internal: Permission denied (publickey).
 
 
 
 Log in to the *NBDE3* server as *root*  and enter the LUKS password *r3dh4t1!*.
 
-     [%USERNAME%bastion ~]$ ssh root@nbde3.%GUID%.internal
+     [{USERNAME}bastion ~]$ ssh root@nbde3.{GUID}.internal
     Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
 Connection to nbde3.%GUID%.internal closed.
 
@@ -212,9 +215,10 @@ Pass the *-vf* parameter if you want to see verbose output.
 This may take up to five minutes in the lab environment.
 
 . You may watch to see when *NBDE3* comes back online, by using *ping*:
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion 0 ~]$ ping nbde3.%GUID%.internal                                                        
-PING nbde3.%GUID%.internal (192.168.0.242) 56(84) bytes of data.
+[{USERNAME}@bastion 0 ~]$ ping nbde3.{GUID}.internal
+PING nbde3.{GUID}.internal (192.168.0.242) 56(84) bytes of data.
 ----
 
 === Initializing the LUKS Binding to the Tang Server using Cockpit
@@ -269,16 +273,16 @@ endif::[]
 
 .. First you open an SSH connection using port forwarding. This will open a connection forwarding the port `5901` to your localhost (you don't need to run this if it has been done in OpenSCAP exercise):
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -N -f -L 5901:localhost:5901 %USERNAME%@%OPENSCAP_IP_ADDRESS%
+ssh -N -f -L 5901:localhost:5901 {USERNAME}@{OPENSCAP_IP_ADDRESS}
 ----
 
 .. Answer `yes` to accept server's identity if asked, and then input the following password. Note that this will create a background SSH process, so you can use the same terminal to run the next step:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%OPENSCAP_PASSWORD%
+{OPENSCAP_PASSWORD}
 ----
 
 .. Open TigerVNC (it's called either tigervnc or vncviewer) application and type under `VNC Server` text input:
@@ -290,9 +294,9 @@ localhost:1
 
 .. Click `Connect` and then answer `yes` to accept server's identity if asked and input the following password in the pop up window:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%OPENSCAP_PASSWORD%
+{OPENSCAP_PASSWORD}
 ----
 
 . Open a Firefox web browser:
@@ -307,7 +311,7 @@ image:nbde_cockpit_firefox_1.png[window=_blank,link=nbde_cockpit_firefox_1.png]
 =====
 If the web page is not loading, log in to the *NBDE2* server as *root*  and enter the LUKS password *r3dh4t1!*.
 
-     [%USERNAME%@bastion ~]$ ssh root@nbde2.%GUID%.internal
+     [{USERNAME}@bastion ~]$ ssh root@nbde2.{GUID}.internal
     Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
 Connection to nbde2.%GUID%.internal closed.
 

@@ -32,25 +32,25 @@ AIDE and audit watches are complementary security tools that can help you harden
 === Installing the AIDE package
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *aide.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh aide.%GUID%.internal
+[{USERNAME}@bastion ~]$ ssh aide.{GUID}.internal
 ----
 
 All of the exercises in this lab are run on the *aide.%GUID%.internal* host,
@@ -59,7 +59,7 @@ as the *root* user:
 * To get to *root* user prompt on *aide.%GUID%.internal*:
 +
 ----
-[%USERNAME%@aide ~]$ sudo su -
+[{USERNAME}@aide ~]$ sudo su -
 [root@aide ~]#
 ----
 +
@@ -383,15 +383,15 @@ Your `auditd` is configured to manually start and stop, so you must reboot the s
 +
 ----
 [root@aide ~]# reboot
-Connection to aide.%GUID%.internal closed by remote host.
-Connection to aide.%GUID%.internal closed.
+Connection to aide.{GUID}.internal closed by remote host.
+Connection to aide.{GUID}.internal closed.
 ----
 
 . Log in again to the *aide.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
 ----
-[%USERNAME%@bastion ~]$ ssh aide.%GUID%.internal
-[%USERNAME%@aide ~]$ sudo su -
+[{USERNAME}@bastion ~]$ ssh aide.{GUID}.internal
+[{USERNAME}@aide ~]$ sudo su -
 [root@aide ~]#
 [root@aide ~]$ auditctl -l
 -w /etc/shadow -pa -k shadow_key

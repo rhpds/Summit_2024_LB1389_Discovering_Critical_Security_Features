@@ -37,26 +37,26 @@ The firewall is enabled by default, but you can check this in a couple of ways b
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *firewalld.{GUID}.internal* host and switch to the *root* user:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]$ ssh firewalld.%GUID%.internal
-[%USERNAME%@firewalld ~]$ sudo su -
+[{USERNAME}@bastion ~]$ ssh firewalld.{GUID}.internal
+[{USERNAME}@firewalld ~]$ sudo su -
 ----
 
 . The lab does not have the firewall enabled by default, so you install it as *root*, enable and start the `firewalld` service, and confirm that the service is both active and enabled:
