@@ -68,7 +68,7 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . When asked, enter or provide this information:
 * *Key Type*: *(1)* to select the default, `RSA and RSA` is the default
-* *Key Size*: *2048*
+* *Key Size*: *3072*
 * *Expiration*: *0* for no expiration, this is generally fine for local encryption
 * *Real Name*: *labuser*, but this can be anything
 * *Email address*: *labuser@test.com*, but this can be any email address
