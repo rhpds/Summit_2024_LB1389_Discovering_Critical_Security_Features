@@ -381,6 +381,7 @@ Your `auditd` is configured to manually start and stop, so you must reboot the s
 
 . If you want to reboot your server to verify that your rule has survived, run the following:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [root@aide ~]# reboot
 Connection to aide.{GUID}.internal closed by remote host.
@@ -389,6 +390,7 @@ Connection to aide.{GUID}.internal closed.
 
 . Log in again to the *aide.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]$ ssh aide.{GUID}.internal
 [{USERNAME}@aide ~]$ sudo su -

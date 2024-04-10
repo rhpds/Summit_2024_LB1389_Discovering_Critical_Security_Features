@@ -151,6 +151,7 @@ Please reboot the system for the setting to take effect.
 
 . Reboot the system to activate FIPS mode:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [root@cryptopolicies ~]# reboot
 Connection to cryptopolicies.{GUID}.internal closed by remote host.
@@ -159,6 +160,7 @@ Connection to cryptopolicies.{GUID}.internal closed.
 
 . Log in again to the *cryptopolicies.%GUID%.internal* host as *root* after reboot (retry multiple times if the command fails):
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]$ ssh cryptopolicies.{GUID}.internal
 [{USERNAME}@cryptopolicies ~]$ sudo su -

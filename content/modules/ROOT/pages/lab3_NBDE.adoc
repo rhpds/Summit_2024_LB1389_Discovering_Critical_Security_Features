@@ -71,22 +71,22 @@ Your *NBDE3* client is already encrypted. In this section, you install the clien
 [{USERNAME}@nbde3 ~]$ sudo su -
 ----
 
-[NOTE]
-=====
 If you get an error like the following when trying to ssh into `nbde3.{GUID}.internal` follow the steps below and resume the lab steps.
 
-    [{USERNAME}@bastion ~]$ ssh nbde3.{GUID}.internal
-    {USERNAME}@nbde3.{GUID}.internal: Permission denied (publickey).
-
-
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+[{USERNAME}@bastion ~]$ ssh nbde3.{GUID}.internal
+{USERNAME}@nbde3.{GUID}.internal: Permission denied (publickey).
+----
 
 Log in to the *NBDE3* server as *root*  and enter the LUKS password *r3dh4t1!*.
 
-     [{USERNAME}bastion ~]$ ssh root@nbde3.{GUID}.internal
-    Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
-Connection to nbde3.%GUID%.internal closed.
-
-=====
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+[{USERNAME}bastion ~]$ ssh root@nbde3.{GUID}.internal
+Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
+Connection to nbde3.{GUID}.internal closed.
+----
 
 . Install the Clevis packages:
 +
@@ -97,8 +97,9 @@ Connection to nbde3.%GUID%.internal closed.
 . Initialize the LUKS binding to the *Tang* server, using *r3dh4t1!* as the LUKS password.
 
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@nbde3 ~]# clevis luks bind -d /dev/xvda2 tang '{"url":"http://nbde1.%GUID%.internal"}'
+[root@nbde3 ~]# clevis luks bind -d /dev/xvda2 tang '{"url":"http://nbde1.{GUID}.internal"}'
 The advertisement contains the following signing keys:
 
 1234abcdef5678GHIJK90lmnopq
@@ -215,6 +216,7 @@ Pass the *-vf* parameter if you want to see verbose output.
 This may take up to five minutes in the lab environment.
 
 . You may watch to see when *NBDE3* comes back online, by using *ping*:
++
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@bastion 0 ~]$ ping nbde3.{GUID}.internal
@@ -306,17 +308,15 @@ image:nbde_cockpit_firefox.png[window=_blank,link=nbde_cockpit_firefox.png]
 . Open link:https://nbde2.{GUID}.internal:9090/[https://nbde2.{GUID}.internal:9090/^]:
 +
 image:nbde_cockpit_firefox_1.png[window=_blank,link=nbde_cockpit_firefox_1.png]
-
-[NOTE]
-=====
++
 If the web page is not loading, log in to the *NBDE2* server as *root*  and enter the LUKS password *r3dh4t1!*.
-
-     [{USERNAME}@bastion ~]$ ssh root@nbde2.{GUID}.internal
-    Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
-Connection to nbde2.%GUID%.internal closed.
-
-=====
-
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+[{USERNAME}@bastion ~]$ ssh root@nbde2.{GUID}.internal
+Please enter passphrase for disk luks-7e6104e8-e282-4a7e-955f-cde7c7283765! ********
+Connection to nbde2.{GUID}.internal closed.
+----
 
 . Log in as *root*, using *r3dh4t1!* for the password.
 

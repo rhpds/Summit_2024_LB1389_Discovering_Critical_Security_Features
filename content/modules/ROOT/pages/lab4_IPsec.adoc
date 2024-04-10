@@ -306,7 +306,7 @@ First, you start the IPsec subsystem on both of the hosts.
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ~]# ping -c3 *ipsec2.{GUID}.internal*
+[root@ipsec1 ~]# ping -c3 ipsec2.{GUID}.internal
 ----
 +
 The first `ping` may fail depending on the time it takes to set up the IPsec
