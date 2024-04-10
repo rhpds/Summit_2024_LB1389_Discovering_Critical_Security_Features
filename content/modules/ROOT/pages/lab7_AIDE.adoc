@@ -140,7 +140,7 @@ AIDE found NO differences between database and filesystem. Looks okay!!
 [root@aide ~]# vi /etc/aide.conf
 ----
 
-. Type the command *:265* to go to line 265 and expect to see these two lines in the results:
+. Type the command *:259* to go to line 259 and expect to see these two lines in the results:
 +
 ----
 /etc/ssh/sshd_config CONTENT_EX
@@ -188,13 +188,13 @@ When you run AIDE, you expect it to note the change of the permissions and ident
 +
 ----
 [root@aide ~]# aide --check
-Start timestamp: 2019-04-09 20:53:34 -0400 (AIDE 0.16)
+Start timestamp: 2024-04-10 14:39:21 +0000 (AIDE 0.16)
 AIDE found differences between database and filesystem!!
 ----
 +
 ----
 Summary:
-  Total number of entries:	34527
+  Total number of entries:	43886
   Added entries:		0
   Removed entries:		0
   Changed entries:		1
@@ -278,31 +278,30 @@ A full list of watch parameters can be found by reviewing the man page.
 . Look for the entry in the audit log in your output that is similar to this:
 +
 ----
-Start timestamp: 2019-04-09 21:20:27 -0400 (AIDE 0.16)
+Start timestamp: 2024-04-10 14:47:36 +0000 (AIDE 0.16)
 AIDE found differences between database and filesystem!!
 
 Summary:
-  Total number of entries:	34527
-  Added entries:		0
-  Removed entries:		0
-  Changed entries:		1
+  Total number of entries:      43886
+  Added entries:                0
+  Removed entries:              0
+  Changed entries:              1
 
 ---------------------------------------------------
 Changed entries:
 ---------------------------------------------------
 
-f = p.. .c...A.. : /etc/shadow
+f   p..    ..A.. : /etc/shadow
 
 ---------------------------------------------------
 Detailed information about changes:
 ---------------------------------------------------
 
 File: /etc/shadow
-  Perm     : ----------                       | -rw-r--r--
-  Ctime    : 2019-02-19 13:04:22 -0500        | 2019-04-09 21:20:22 -0400
+  Perm     : ----------                       | -rw-rw-rw-
   ACL      : A: user::---                     | A: user::rw-
-             A: group::---                    | A: group::r--
-             A: other::---                    | A: other::r--
+             A: group::---                    | A: group::rw-
+             A: other::---                    | A: other::rw-
 
 
 ---------------------------------------------------
@@ -310,18 +309,18 @@ The attributes of the (uncompressed) database(s):
 ---------------------------------------------------
 
 /var/lib/aide/aide.db.gz
-  MD5      : L99C1z9U5hDXrVJkdxv8qg==
-  SHA1     : 0qQnLmKrq8DPjoZGxV/9jBgopDE=
-  RMD160   : YtlqppsIO4aGROFfZaiGYI0/GJQ=
-  TIGER    : mKlEijHuVsItkmycKWdZpCTGI4srEYAs
-  SHA256   : VfDDweNBApFyGYrI+Ev7pvNQyGV6W5Kn
-             9syeJ5HvKWs=
-  SHA512   : Kpi9byRr3Z9FJ7hCoP1eTSt8Ds1EGTYG
-             ByiZuCGZpnz96xowEG3jxib/SqSRDnxI
-             PB+ag/UbrRa6X1z4GB1iDQ==
+  MD5      : DQBs8K6jzhlGjw5lzltZEw==
+  SHA1     : Jmgw+EsNMt0JoDemngIe1oKeWM0=
+  RMD160   : 78DShPwxu1NR2dyY7o6/cj+5Ctk=
+  TIGER    : vEfTQnzw3V5vuMBRIbspd4KzBdQF5EWI
+  SHA256   : D53D5NIbSLHyzpO2JSOMOEHiSWoFo+ke
+             XDh4gSbdB28=
+  SHA512   : xVwBuOLdVqPc1WUB8cAOln9MCNa87l9O
+             s7uKArR+MPVOQmmxf9ElFjW7CIyxuPPk
+             9tzRY/SgHowqPOvx6q2hcw==
 
 
-End timestamp: 2019-04-09 21:20:39 -0400 (run time: 0m 12s)
+End timestamp: 2024-04-10 14:47:46 +0000 (run time: 0m 10s)
 ----
 +
 Note in the output that the permissions on the `/etc/shadow file` changed. Because you set an audit watch on this file, you can now search for the key in the audit log by using the `ausearch` command that comes with `auditd`.
@@ -335,11 +334,12 @@ Note in the output that the permissions on the `/etc/shadow file` changed. Becau
 . Examine the entry returned in the `audit.log`:
 +
 ----
-type=CONFIG_CHANGE msg=audit(04/09/2019 21:18:44.578:127) :  auid=root ses=1 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 op=add_rule key=shadow_key list=exit res=yes
-type=PROCTITLE msg=audit(04/09/2019 21:20:22.554:128) : proctitle=chmod 0644 /etc/shadow
-type=PATH msg=audit(04/09/2019 21:20:22.554:128) : item=0 name=/etc/shadow inode=4736901 dev=fd:00 mode=file,000 ouid=root ogid=root rdev=00:00 obj=system_u:object_r:shadow_t:s0 nametype=NORMAL cap_fp=none cap_fi=none cap_fe=0 cap_fver=0
-type=CWD msg=audit(04/09/2019 21:20:22.554:128) : cwd=/var/lib/aide
-type=SYSCALL msg=audit(04/09/2019 21:20:22.554:128) : arch=x86_64 syscall=fchmodat success=yes exit=0 a0=0xffffff9c a1=0x55a68921f670 a2=0644 a3=0xfff items=1 ppid=1656 pid=2685 auid=root uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root fsgid=root tty=pts0 ses=1 comm=chmod exe=/usr/bin/chmod subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 key=shadow_key
+type=CONFIG_CHANGE msg=audit(04/10/2024 14:45:20.630:2394) : auid=ec2-user ses=9 subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 op=add_rule key=shadow_key list=exit res=yes
+----
+type=PROCTITLE msg=audit(04/10/2024 14:47:18.100:2401) : proctitle=chmod 0666 /etc/shadow
+type=PATH msg=audit(04/10/2024 14:47:18.100:2401) : item=0 name=/etc/shadow inode=17500434 dev=103:04 mode=file,000 ouid=root ogid=root rdev=00:00 obj=system_u:object_r:shadow_t:s0 nametype=NORMAL cap_fp=none cap_fi=none cap_fe=0 cap_fver=0 cap_frootid=0
+type=CWD msg=audit(04/10/2024 14:47:18.100:2401) : cwd=/root
+type=SYSCALL msg=audit(04/10/2024 14:47:18.100:2401) : arch=x86_64 syscall=fchmodat success=yes exit=0 a0=AT_FDCWD a1=0x555d6c163660 a2=0666 a3=0x0 items=1 ppid=25708 pid=26049 auid=ec2-user uid=root gid=root euid=root suid=root fsuid=root egid=root sgid=root fsgid=root tty=pts0 ses=9 comm=chmod exe=/usr/bin/chmod subj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023 key=shadow_key
 ----
 
 . While there are many attributes in the log entry, find the five that are of particular interest:
