@@ -21,29 +21,29 @@
 
 . To connect to your environment, first execute the below SSH command in the terminal:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . If everything works correctly, you end up in the lab's system shell.
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [... ~]$ pwd
-/home/%USERNAME%
+/home/{USERNAME}
 [... ~]$ cat /etc/passwd
 ...
-%USERNAME%:x:1000:100:GTPE Student:/home/%USERNAME%:/bin/bash
+{USERNAME}:x:1000:100:GTPE Student:/home/{USERNAME}:/bin/bash
 ----
 
 Congratulations, now you are in your *text console*.
@@ -69,13 +69,13 @@ This section contains various tips that may be useful to keep in mind as you are
 
 Shell session listings obey the following conventions:
 
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [... ~]$ pwd
-/home/%USERNAME%
+/home/{USERNAME}
 [... ~]$ cat /etc/passwd
 ...
-%USERNAME%:x:1000:1000:GTPE Student:/home/%USERNAME%:/bin/bash
+{USERNAME}:x:1000:1000:GTPE Student:/home/{USERNAME}:/bin/bash
 ----
 
 - Commands such as `pwd` and `cat /etc/passwd` in this example are prefixed by `[...`, followed by the respective directory name and `]$`.
