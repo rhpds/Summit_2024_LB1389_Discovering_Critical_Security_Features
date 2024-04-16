@@ -1,11 +1,11 @@
-:GUID: %GUID%
-:USERNAME: %USERNAME%
+:GUID: {GUID}
+:USERNAME: {USERNAME}
 
-:OPENSCAP_PASSWORD: %OPENSCAP_PASSWORD%
-:OPENSCAP_IP_ADDRESS: %OPENSCAP_IP_ADDRESS%
+:OPENSCAP_PASSWORD: {OPENSCAP_PASSWORD}
+:OPENSCAP_IP_ADDRESS: {OPENSCAP_IP_ADDRESS}
 
-:BASTION_PASSWORD: %BASTION_PASSWORD%
-:BASTION_IP_ADDRESS: %BASTION_IP_ADDRESS%
+:BASTION_PASSWORD: {BASTION_PASSWORD}
+:BASTION_IP_ADDRESS: {BASTION_IP_ADDRESS}
 
 :sectnums: true
 :toc: true
@@ -34,7 +34,7 @@ In this lab, you focus on single host scanning and remediations for security vul
 All of the steps in this setup section are already completed for you.
 This section is for reference only so that you know what is already configured in this lab environment.
 
-* Red Hat Enterprise Linux 8.1 is installed on the *openscap.{GUID}.internal* host.
+* Red Hat Enterprise Linux 9 is installed on the *openscap.{GUID}.internal* host.
 +
 [NOTE]
 ====
@@ -43,10 +43,10 @@ Versions of installed packages may not be up-to-date, but this does not affect t
 
 * Additionally, *openscap-scanner*, *scap-security-guide*, and *Ansible* are installed on the *openscap.{GUID}.internal* host.
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]# ssh openscap.%GUID%.internal
-[%USERNAME%@openscap ~]$ sudo su
+[{USERNAME}@bastion ~]# ssh openscap.{GUID}.internal
+[{USERNAME}@openscap ~]$ sudo su
 # the tool that performs the scanning
 [root@openscap]# dnf install openscap-scanner
 # project that brings in security policies we will load and test agains
@@ -58,10 +58,11 @@ Versions of installed packages may not be up-to-date, but this does not affect t
 ----
 [root@openscap ~]# oscap -V
 
-OpenSCAP command line tool (oscap) 1.3.2
-Copyright 2009--2018 Red Hat Inc., Durham, North Carolina.
+OpenSCAP command line tool (oscap) 1.3.8
+Copyright 2009--2021 Red Hat Inc., Durham, North Carolina.
 
 ==== Supported specifications ====
+SCAP Version: 1.3
 XCCDF Version: 1.2
 OVAL Version: 5.11.1
 CPE Version: 2.3
@@ -94,21 +95,21 @@ If Tiger VNC is already installed (`vncviewer` in the command line), jump to nex
 
 .. RHEL:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
 dnf install tigervnc
 ----
 
 .. Fedora:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
 dnf install tigervnc
 ----
 
 .. Ubuntu:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
 apt-get install tigervnc-viewer
 ----
@@ -126,16 +127,16 @@ endif::[]
 
 .. First, open an SSH connection using port forwarding. This will open a connection forwarding the port `5901` to your localhost:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-ssh -N -L 5901:localhost:5901 %USERNAME%@%OPENSCAP_IP_ADDRESS%
+ssh -N -L 5901:localhost:5901 {USERNAME}@{OPENSCAP_IP_ADDRESS}
 ----
 
 .. Answer `yes` to accept server's identity if asked, and then input the following password. Note that the terminal hangs because of the port forwarding. In the end of the workshop you can terminate the connection by hitting `Ctrl+C`:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-%OPENSCAP_PASSWORD%
+{OPENSCAP_PASSWORD}
 ----
 
 . To set up an SSH connection using port forwarding from Windows, first, download and install link:https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html[window=_blank,puTTY].
@@ -150,7 +151,7 @@ ssh -N -L 5901:localhost:5901 %USERNAME%@%OPENSCAP_IP_ADDRESS%
 image:puttytunnel.png[window=_blank,link=puttytunnel.png,700,700]
 
 .. Go to `Session`
-.. Fill in %OPENSCAP_IP_ADDRESS% in the `Host Name (or IP address)` field.
+.. Fill in {OPENSCAP_IP_ADDRESS} in the `Host Name (or IP address)` field.
 .. Click `Open`
 
 +
@@ -161,11 +162,11 @@ image:puttymain.png[window=_blank,link=puttymain.png,700,700]
 +
 image:puttysecuritywarning.png[window=_blank,link=puttysecuritywarning.png,500,500]
 
-.. Login as %USERNAME% with password:
+.. Login as {USERNAME} with password:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-%OPENSCAP_PASSWORD%
+{OPENSCAP_PASSWORD}
 ----
 
 +
@@ -173,16 +174,16 @@ image:puttyterminal.png[window=_blank,link=puttyterminal.png,900,900]
 
 . Now open TigerVNC (it's called either tigervnc or vncviewer) and in the `VNC Server` field input:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
 localhost:1
 ----
 
 .. Click `Connect` and then answer `yes` to accept server's identity if asked and input the following password in the pop-up window:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-%OPENSCAP_PASSWORD%
+{OPENSCAP_PASSWORD}
 ----
 
 If an alert appears stating that the connection isn't secure, disregard that alert. Although VNC data is unencrypted by default, you're accessing the VNC server using an encrypted SSH tunnel.
@@ -195,14 +196,14 @@ Congratulations, you are in your *graphical console* using a VNC connection.
 
 // .. Fedora:
 // +
-// [%nowrap]
+// [%nowrap,source,ini,subs=attributes+]
 // ----
 // dnf install rdesktop
 // ----
 
 // .. Ubuntu:
 // +
-// [%nowrap]
+// [%nowrap,source,ini,subs=attributes+]
 // ----
 // apt-get install rdesktop
 // ----
@@ -216,20 +217,20 @@ Congratulations, you are in your *graphical console* using a VNC connection.
 // +
 // OpenSCAP:
 // +
-// [%nowrap]
+// [%nowrap,source,ini,subs=attributes+]
 // ----
-// rdesktop %OPENSCAP_IP_ADDRESS% -u %USERNAME% -p %OPENSCAP_PASSWORD%
+// rdesktop {OPENSCAP_IP_ADDRESS} -u {USERNAME} -p {OPENSCAP_PASSWORD}
 // ----
 
 // . On Windows, you can follow the instructions here: link:https://support.microsoft.com/en-us/help/4028379/windows-10-how-to-use-remote-desktop[How to Use Remote Desktop on Windows]. Use the following credentials when asked:
 // +
 // OpenSCAP:
 // +
-// [%nowrap]
+// [%nowrap,source,ini,subs=attributes+]
 // ----
-// IP Address %OPENSCAP_IP_ADDRESS%
-// Username: %USERNAME%
-// Password: %OPENSCAP_PASSWORD%
+// IP Address {OPENSCAP_IP_ADDRESS}
+// Username: {USERNAME}
+// Password: {OPENSCAP_PASSWORD}
 // ----
 
 // Congratulations, you are in your *graphical console* using an RDP connection.
@@ -238,32 +239,32 @@ Congratulations, you are in your *graphical console* using a VNC connection.
 
 . If not already there, log in to the workstation bastion host as *{USERNAME}*:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-ssh -o "ServerAliveInterval 30" %USERNAME%@%BASTION_IP_ADDRESS%
+ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-%BASTION_PASSWORD%
+{BASTION_PASSWORD}
 ----
 
 . Log in to the *openscap.{GUID}.internal* host:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[%USERNAME%@bastion ~]# ssh openscap.%GUID%.internal
+[{USERNAME}@bastion ~]# ssh openscap.{GUID}.internal
 ----
 
 . Now, switch to *root* with the following command:
 +
-[%nowrap]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[%USERNAME%@openscap ~]$ sudo su
+[{USERNAME}@openscap ~]$ sudo su
 ----
 
 . Examine the compliance content provided by `scap-security-guide`:
@@ -271,17 +272,11 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 ----
 [root@openscap ~]# rpm -ql scap-security-guide
 ...
-/usr/share/xml/scap/ssg/content/ssg-rhel8-cpe-dictionary.xml
-/usr/share/xml/scap/ssg/content/ssg-rhel8-cpe-oval.xml
-/usr/share/xml/scap/ssg/content/ssg-rhel8-ds.xml
-/usr/share/xml/scap/ssg/content/ssg-rhel8-ocil.xml
-/usr/share/xml/scap/ssg/content/ssg-rhel8-oval.xml
-/usr/share/xml/scap/ssg/content/ssg-rhel8-xccdf.xml
-...
+/usr/share/xml/scap/ssg/content/ssg-rhel9-ds.xml
 ----
 +
 Note that content provided in `scap-security-guide` covers a wide range of security baselines.
-For Red Hat Enterprise Linux 8, Protection Profile for General Purpose Operating Systems (OSPP) and  Payment Card Industry Data Security Standard (PCI-DSS) profiles are available.
+For Red Hat Enterprise Linux 9, profiles like Spanish National Cryptologic Center (CCN) and  Payment Card Industry Data Security Standard (PCI-DSS) profiles are available.
 There are various formats in which this is provided--human-readable HTML guides, SCAP benchmarks, and Ansible remediation playbooks.
 
 . Move to the `content` folder so that you can avoid typing long paths in the subsequent exercises:
@@ -290,22 +285,22 @@ There are various formats in which this is provided--human-readable HTML guides,
 [root@openscap ~]# cd /usr/share/xml/scap/ssg/content
 ----
 
-. Determine which content and compliance profiles (OSPP and PCI-DSS) are available for Red Hat Enterprise Linux 8:
+. Determine which content and compliance profiles are available for Red Hat Enterprise Linux 9:
 +
 ----
-[root@openscap content]# oscap info ssg-rhel8-ds.xml
+[root@openscap content]# oscap info ssg-rhel9-ds.xml
 ----
 
-. Perform your first security compliance baseline scan with the OSPP profile:
+. Perform your first security compliance baseline scan with the CCN profile:
 +
 The scanning command must be executed by a privileged user: `root` or using `sudo`. Therefore the scanner can access system parts that are off-limits to common users.
 The simplest scanner invocation can look like this:
 +
 ----
-oscap xccdf eval --profile ospp ./ssg-rhel8-ds.xml
+oscap xccdf eval --profile ccn_basic ./ssg-rhel9-ds.xml
 ----
 +
-You can omit the profile ID prefix to make the command simpler--the actual ID is `xccdf_org.ssgproject.content_profile_ospp`.
+You can omit the profile ID prefix to make the command simpler--the actual ID is `xccdf_org.ssgproject.content_profile_ccn_basic`.
 +
 You also want to store the scan results, so you can process them later.
 Therefore, you need to supply additional arguments.
@@ -313,7 +308,7 @@ Therefore, you need to supply additional arguments.
 . Store the results of the scan this time:
 +
 ----
-[root@openscap content]# oscap xccdf eval --oval-results --profile ospp --results-arf /tmp/arf.xml --report /tmp/report.html ./ssg-rhel8-ds.xml
+[root@openscap content]# oscap xccdf eval --oval-results --profile ccn_basic --results-arf /tmp/arf.xml --report /tmp/report.html ./ssg-rhel9-ds.xml
 ----
 +
 --
@@ -329,7 +324,7 @@ Therefore, you need to supply additional arguments.
 [root@openscap content]# oscap xccdf generate report /tmp/arf.xml > /tmp/report.html
 ----
 
-. Access the GUI interface and open the file `/tmp/report.html` in firefox. Expect to see the security compliance scan results for every security control in the OSPP security baseline profile in HTML format:
+. Access the GUI interface and open the file `/tmp/report.html` in firefox. Expect to see the security compliance scan results for every security control in the CCN security baseline profile in HTML format:
 +
 image:lab1.1-scapreport.png[window=_blank,link=lab1.1-scapreport.png,500,500]
 +
@@ -364,7 +359,7 @@ The machine is in a state equivalent to a default installation.
 
 . In the GUI, click `Activities` in the top left corner of the screen, then select the green circle icon for SCAP Workbench.
 
-. Select *RHEL8* and click *Load Content* to open the compliance content for Red Hat Enterprise Linux 8:
+. Select *RHEL9* and click *Load Content* to open the compliance content for Red Hat Enterprise Linux 9:
 +
 image:lab1.2-scapsecurityguide.png[window=_blank,link=lab1.2-scapsecurityguide.png,600,600]
 +
@@ -372,7 +367,7 @@ image:lab1.2-workbench_opened.png[window=_blank,link=lab1.2-workbench_opened.png
 
 ==== Customizing PCI-DSS Control Baseline and Tests
 
-. For *Profile*, select *PCI-DSS v3 Control Baseline for Red Hat Enterprise Linux 8 (18)*, then click *Customize*:
+. For *Profile*, select *PCI-DSS v4.0 Control Baseline for Red Hat Enterprise Linux 9 (247)*, then click *Customize*:
 +
 image:lab1.2-selectcustomize.png[window=_blank,link=lab1.2-selectcustomize.png,700,700]
 
@@ -419,7 +414,7 @@ using the `--fix-type ansible` option to request a playbook with the scan result
 [root@openscap]# oscap xccdf generate fix --fix-type ansible --result-id "" /tmp/arf.xml > playbook.yml
 ----
 +
-This puts the *openscap.{GUID}.internal* machine into compliance based on a given security compliance profile from the previous scan results of the OSPP security baseline profile.
+This puts the *openscap.{GUID}.internal* machine into compliance based on a given security compliance profile from the previous scan results of the CCN security baseline profile.
 
 . (Optional) Generate the bash remediation script using `--fix-type bash` to request a bash script with the fixes:
 +
@@ -427,7 +422,7 @@ This puts the *openscap.{GUID}.internal* machine into compliance based on a give
 [root@openscap]# oscap xccdf generate fix --fix-type bash --result-id "" /tmp/arf.xml > bash-fix.sh
 ----
 +
-By running either the automatically generated Ansible remediation playbook or the bash remediation script, the *openscap.{GUID}.internal* machine is put into compliance to the OSPP security baseline profile.
+By running either the automatically generated Ansible remediation playbook or the bash remediation script, the *openscap.{GUID}.internal* machine is put into compliance to the CCN security baseline profile.
 +
 TIP: Note that in both cases you use an empty `--result-id`. This is a trick to avoid specifying the full result ID.
 
@@ -442,7 +437,7 @@ In this section, you focus on the Ansible remediation options.
 ---
 ###############################################################################
 #
-# Ansible remediation role for the results of evaluation of profile xccdf_org.ssgproject.content_profile_ospp
+# Ansible remediation role for the results of evaluation of profile xccdf_org.ssgproject.content_profile_ccn_basic
 # XCCDF Version:  1.2
 #
 ...
@@ -455,7 +450,7 @@ In this section, you focus on the Ansible remediation options.
 ###############################################################################
 ----
 
-. Examine the generated playbook in detail and note the various Ansible tasks for configuring this machine to make it compliant with the OSPP security baseline profile:
+. Examine the generated playbook in detail and note the various Ansible tasks for configuring this machine to make it compliant with the CCN security baseline profile:
 +
 ----
     - name: Ensure PAM variable minlen is set accordingly
@@ -480,12 +475,11 @@ In this section, you focus on the Ansible remediation options.
 +
 ----
 ...
-    var_accounts_passwords_pam_faillock_unlock_time: !!str never
-    var_accounts_passwords_pam_faillock_fail_interval: !!str 900
-    var_password_pam_ucredit: !!str -1
+    var_password_pam_minclass: !!str 4
     var_password_pam_minlen: !!str 18
     var_password_pam_retry: !!str 3
-    var_password_pam_ocredit: !!str -1
+    var_accounts_maximum_age_login_defs: !!str 45
+    var_accounts_minimum_age_login_defs: !!str 2
 ...
 ----
 +
@@ -494,7 +488,7 @@ In this section, you focus on the Ansible remediation options.
 After making this change, press *Ctrl+X*, then type *y* and press *Enter* in your nano text editor to save your changes.
 ====
 
-. Run the playbook locally on the *openscap.{GUID}.internal* host in check mode to see how it would change the machine to put it into compliance with the OSPP security baseline profile. For demonstration purposes we are going to check only one rule:
+. Run the playbook locally on the *openscap.{GUID}.internal* host in check mode to see how it would change the machine to put it into compliance with the CCN security baseline profile. For demonstration purposes we are going to check only one rule:
 +
 ----
 [root@openscap]# ansible-playbook -i "localhost," -c local --tags accounts_password_pam_minlen --check playbook.yml
@@ -515,4 +509,4 @@ localhost                  : ok=2    changed=1    unreachable=0    failed=0    s
 ed=0    rescued=0    ignored=0
 ----
 +
-IMPORTANT: If you omit the `--check` and `--tags` parameters from the previous command, the resulting machine is compliant with the provided rules in the OSPP security baseline profile. If you apply the remediation you won't be able to connect through SSH using *root* to the *openscap.{GUID}.internal* machine. This is because the machine is hardened with the Ansible remediation playbook for the OSPP security baseline profile and one of the requirements of the OSPP security baseline profile prohibits to connect through SSH using login as *root*.
+IMPORTANT: If you omit the `--check` and `--tags` parameters from the previous command, the resulting machine is compliant with the provided rules in the CCN security baseline profile. If you apply the remediation you won't be able to connect through SSH using *root* to the *openscap.{GUID}.internal* machine. This is because the machine is hardened with the Ansible remediation playbook for the CCN security baseline profile and one of the requirements of the CCN security baseline profile prohibits to connect through SSH using login as *root*.
