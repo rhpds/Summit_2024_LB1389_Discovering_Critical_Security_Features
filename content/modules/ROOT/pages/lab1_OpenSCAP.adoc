@@ -41,7 +41,7 @@ This section is for reference only so that you know what is already configured i
 Versions of installed packages may not be up-to-date, but this does not affect the lab.
 ====
 
-* Additionally, *openscap-scanner*, *scap-security-guide*, and *Ansible* are installed on the *openscap.{GUID}.internal* host.
+* Additionally, *openscap-scanner*, *scap-security-guide*, *ansible-core* and *rhc-worker-playbook* are installed on the *openscap.{GUID}.internal* host.
 +
 [%nowrap,source,ini,subs=attributes+]
 ----
@@ -51,6 +51,8 @@ Versions of installed packages may not be up-to-date, but this does not affect t
 [root@openscap]# dnf install openscap-scanner
 # project that brings in security policies we will load and test agains
 [root@openscap]# dnf install scap-security-guide
+# allows execution of ansible playbooks
+[root@openscap]# dnf install ansible-core rhc-worker-playbook
 ----
 
 * To verify a successful installation, run:
@@ -86,7 +88,7 @@ If during your own installation a message indicates that the `oscap` command is 
 
 === Accessing the Graphical User Interface of your dedicated OpenSCAP environment
 
-. This is a Red Hat^(R)^ Enterprise Linux^(R)^ 8 system with GUI. It is the machine that you will use throughout all of the exercises in this lab. To access the Graphical User Interface (GUI) you need a Virtual Network Computing (VNC) client.
+. This is a Red Hat^(R)^ Enterprise Linux^(R)^ 9 system with GUI. It is the machine that you will use throughout all of the exercises in this lab. To access the Graphical User Interface (GUI) you need a Virtual Network Computing (VNC) client.
 
 ==== Connecting to the GUI through a VNC Client
 If Tiger VNC is already installed (`vncviewer` in the command line), jump to next section. Otherwise, follow the below steps to install it.
@@ -334,13 +336,11 @@ Rules can have several types of results, but the most common are *pass* and *fai
 Other results you can encounter frequently are *notapplicable*, for rules that were skipped as not relevant to the scanned system, and *notchecked*, for rules without an automated check.
 ====
 
-. Click any of the rule titles in the HTML report, such as the rules highlighted in red in this image:
+. Click any of the rule titles in the HTML report, such as the rule highlighted in red in this image:
 +
 image:lab1.1-clickrule.png[window=_blank,link=lab1.1-clickrule.png,600,600]
 
-. Wait for the dialog to appear, then examine the details of the OpenSCAP security rule that failed or passed--in this case, it shows which file failed the regex check:
-+
-image:lab1.1-report_pass.png[window=_blank,link=lab1.1-report_pass.png,HTML report: A rule that is passing]
+. Wait for the dialog to appear, then scroll down to examine the details of the OpenSCAP security rule that failed or passed--in this case, it shows which file failed the regex check:
 +
 image:lab1.1-report_fail.png[window=_blank,link=lab1.1-report_fail.png,HTML report: A rule that is failing]
 +
@@ -357,7 +357,9 @@ The machine is in a state equivalent to a default installation.
 
 ==== Using SCAP Workbench
 
-. In the GUI, click `Activities` in the top left corner of the screen, then select the green circle icon for SCAP Workbench.
+. In the GUI, click `Activities` in the top left corner of the screen, then `Show Applications` button, and finally select the green circle icon for SCAP Workbench.
++
+image:lab1.2-workbench_launch.png[window=_blank,link=lab1.2-workbench_launch.png,600,600]
 
 . Select *RHEL9* and click *Load Content* to open the compliance content for Red Hat Enterprise Linux 9:
 +
@@ -367,7 +369,7 @@ image:lab1.2-workbench_opened.png[window=_blank,link=lab1.2-workbench_opened.png
 
 ==== Customizing PCI-DSS Control Baseline and Tests
 
-. For *Profile*, select *PCI-DSS v4.0 Control Baseline for Red Hat Enterprise Linux 9 (247)*, then click *Customize*:
+. For *Profile*, select the *PCI-DSS* entry, then click *Customize* next to the profile:
 +
 image:lab1.2-selectcustomize.png[window=_blank,link=lab1.2-selectcustomize.png,700,700]
 
@@ -490,8 +492,15 @@ After making this change, press *Ctrl+X*, then type *y* and press *Enter* in you
 
 . Run the playbook locally on the *openscap.{GUID}.internal* host in check mode to see how it would change the machine to put it into compliance with the CCN security baseline profile. For demonstration purposes we are going to check only one rule:
 +
+[IMPORTANT]
+====
+Not all modules utilized by compliance ansible playbooks are part of *ansible-core* package. To allow compliance hardening, these modules are provided in *rhc-worker-playbook* package, supported in the context of *scap-security-guide*-sourced ansible playbooks.
+
+Using it on the commandline requires providing environment variable *ANSIBLE_COLLECTIONS_PATH*.
+====
++
 ----
-[root@openscap]# ansible-playbook -i "localhost," -c local --tags accounts_password_pam_minlen --check playbook.yml
+[root@openscap]# ANSIBLE_COLLECTIONS_PATH=/usr/share/rhc-worker-playbook/ansible/collections/ansible_collections/ ansible-playbook -i "localhost," -c local --tags accounts_password_pam_minlen --check playbook.yml
 ----
 +
 ----
@@ -499,13 +508,15 @@ PLAY [all] *********************************************************************
 
 TASK [Gathering Facts] *************************************************************
 
+TASK [Gathering the package facts] *************************************************
+
 ok: [localhost]
 
 TASK [Ensure PAM variable minlen is set accordingly] *******************************
 changed: [localhost]
 
 PLAY RECAP *************************************************************************
-localhost                  : ok=2    changed=1    unreachable=0    failed=0    skipp
+localhost                  : ok=3    changed=1    unreachable=0    failed=0    skipp
 ed=0    rescued=0    ignored=0
 ----
 +
