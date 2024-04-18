@@ -4,36 +4,35 @@
 :toc: true
 
 === Lab Developers
-*Lucy Kerner*, Director, Security Global Strategy and Evangelism, Red Hat^(R)^
+*Lucy Kerner*
 
-*Alexander Jacocks*, Staff Solutions Architect, Red Hat^(R)^
+*Alexander Jacocks*
 
-*Lukas Vrabec*, Principal Software Engineer and RHEL Security Product Owner--Red Hat Enterprise Linux^(R)^ (RHEL) Security, Red Hat^(R)^
+*Lukas Vrabec*
 
-*Gabriel Becker*, Software Engineer--Security Compliance in Red Hat Enterprise Linux^(R)^ (RHEL) Security, Red Hat^(R)^
+*Gabriel Becker*
 
-*Petr Lautrbach*, Senior Software Engineer—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Petr Lautrbach*
 
-*Paul Wouters*, Senior Software Engineer—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Paul Wouters*
 
-*Matej Tyc*, Senior Software Engineer and Tech Lead—Security Compliance in Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Matej Tyc*
 
-*Sergio Correia*, Senior Software Engineer—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Sergio Correia*
 
-*Tomas Mraz*, Principal Software Engineer—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Tomas Mraz*
 
-*Marek Haicman*, Product Owner—Security Compliance in Red Hat Enterprise Linux^(R)^ (RHEL) Security, Red Hat^(R)^
+*Marek Haicman*
 
-*Ondrej Moris*, Senior Software Quality Engineer —Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Ondrej Moris*
 
-*Radovan Sroka*, Software Engineer—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Radovan Sroka*
 
-*Attila Lakatos*, Intern—Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Attila Lakatos*
 
-*Justin Stephenson*, Software Engineer—Identity Management in Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
+*Justin Stephenson*
 
-*Matthew Burket*, Software Engineer—Security Compliance in Red Hat Enterprise Linux^(R)^  (RHEL) Security, Red Hat^(R)^
-
+*Matthew Burket*
 
 === Overview and Prerequisites
 In this lab, you learn how to build defense-in-depth in the operating system by implementing the key security technologies available to you in the latest version of Red Hat Enterprise Linux.
