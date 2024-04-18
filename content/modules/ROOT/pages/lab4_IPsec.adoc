@@ -54,7 +54,7 @@ for *audit.example.com* and *usbguard.example.com*. All your actions are run as 
 ----
 ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
-
++
 TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Answer `yes` to accept server's identity if asked, and then input the following password:
@@ -68,28 +68,38 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[{USERNAME}@bastion ~]$ ssh ec2-user@ipsec1.{GUID}.internal
+ssh ec2-user@ipsec1.{GUID}.internal
 ----
 
 . Use the sudo command to become root:
 +
-[%nowrap]
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[ec2-user@ipsec1 ~]$ sudo su
-[root@ipsec1 ec2-user]#
+sudo su
 ----
 
 . Create the X.509 certificates for the lab:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ec2-user]# mkdir /root/labcerts
-
-[root@ipsec1 ec2-user]# cd /root/labcerts
-
-[root@ipsec1 /root/labcerts]# /root/vpn-cert-gen.py --wipe
+mkdir /root/labcerts && cd /root/labcerts
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+/root/vpn-cert-gen.py --wipe
+----
++
+You should see the following output
++
+----
 creating CA cert
 OK: CA system completely re-initialized
-
+----    
++
+And you'll now have the following generated certificates.
++
+----
 [root@ipsec1 labcerts]# ls
 cacerts  certs  keys  mobileconfig  pkcs12  serial.txt
 
@@ -115,12 +125,24 @@ this mesh host-to-host encryption using Opportunistic IPsec.
 
 . Install `libreswan` and initialize the certificate database using the following commands to first set up *ipsec.example.com*:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 labcerts]# dnf install libreswan
-[root@ipsec1 labcerts]# ipsec initnss
+dnf install libreswan
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec initnss
 ----
 
 . After `libreswan` is installed, import the PKCS#12 certificate:
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec import /root/labcerts/pkcs12/ipsec.example.com.p12
+----
++
+TIP: When prompted for the import password, type *secret*.
 +
 ----
 [root@ipsec1 labcerts]# ipsec import /root/labcerts/pkcs12/ipsec.example.com.p12
@@ -129,10 +151,14 @@ pk12util: PKCS12 IMPORT SUCCESSFUL
 correcting trust bits for Certificate Agency (CA) - Test Org
 ----
 
-. When prompted for the import password, type *secret*.
 
 . Confirm that the node's certificate and CA certificate are installed and
 available to `libreswan`:
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+certutil -L -d sql:/etc/ipsec.d
+----
 +
 ----
 [root@ipsec1 labcerts]# certutil -L -d sql:/etc/ipsec.d
@@ -147,9 +173,14 @@ Certificate Agency (CA) - Test Org                           CT,,
 . We will copy the certificate for the ipsec2 machine into /tmp, because the scp command we will
 use later does not allow the root user and the ec2-user does not have access to /root/labcerts/
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 labcerts]# cp /root/labcerts/pkcs12/ipsec2.example.com.p12 /tmp/
-[root@ipsec1 labcerts]# chown ec2-user /tmp/ipsec2.example.com.p12
+cp /root/labcerts/pkcs12/ipsec2.example.com.p12 /tmp/
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+chown ec2-user /tmp/ipsec2.example.com.p12
 ----
 
 ==== Configuring Hosts for IPsec
@@ -160,8 +191,9 @@ you and placed on the machine at `/root/oe-cert.conf`.
 
 . Copy this file into the `/etc/ipsec.d/` directory so that `libreswan` can use it:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 labcerts]# cp /root/oe-cert.conf /etc/ipsec.d/
+cp /root/oe-cert.conf /etc/ipsec.d/
 ----
 +
 [NOTE]
@@ -184,8 +216,9 @@ request for IPsec.
 properly labeled:
 
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 labcerts]# restorecon -Rv /etc/ipsec.*
+restorecon -Rv /etc/ipsec.*
 ----
 
 . Add an IP address (for example, `192.168.0.66`) or network range (for example,
@@ -197,16 +230,18 @@ the connection name in `/etc/ipsec.d/policies`.
 `192.168.0.0/24` range by adding that network range to the `private-or-clear`
 group:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec labcerts]# echo "192.168.0.0/24" >> /etc/ipsec.d/policies/private-or-clear
+echo "192.168.0.0/24" >> /etc/ipsec.d/policies/private-or-clear
 ----
 
 . Add a more specific entry into the "clear" group so that workstation
 communication always takes place unencrypted and you can always use it to log in to
 other machines to reconfigure or debug:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec labcerts]# echo "192.168.0.54/32" >> /etc/ipsec.d/policies/clear
+echo "192.168.0.54/32" >> /etc/ipsec.d/policies/clear
 ----
 +
 This allows you to log in to all of the machines via the workstation.
@@ -214,10 +249,16 @@ This allows you to log in to all of the machines via the workstation.
 . Tell the `firewalld` system service that you want to open the firewall
 for the required packets for IPsec:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec labcerts]# firewall-cmd --add-service=ipsec --permanent
-
-[root@ipsec labcerts]# firewall-cmd --reload
+firewall-cmd --add-service=ipsec --permanent
+----
++
+And then reload firewalld, so that the newly added rule becomes active.
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+firewall-cmd --reload
 ----
 
 === Transferring the Configuration to a Second System
@@ -235,11 +276,15 @@ ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 ----
 
 . Then copy the ipsec2 certificate from ipsec1 to ipsec2:
-
++
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[{USERNAME}@bastion ~]$ scp ec2-user@ipsec1.{GUID}.internal:/tmp/ipsec2.example.com.p12 /tmp
-[{USERNAME}@bastion ~]$ scp /tmp/ipsec2.example.com.p12 ec2-user@ipsec2.{GUID}.internal:/tmp
+scp ec2-user@ipsec1.{GUID}.internal:/tmp/ipsec2.example.com.p12 /tmp
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+scp /tmp/ipsec2.example.com.p12 ec2-user@ipsec2.{GUID}.internal:/tmp
 ----
 
 . Install `libreswan`, import the certificate on *ipsec2.example.com*, and configure it for Opportunistic IPsec:
@@ -248,25 +293,69 @@ ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[{USERNAME}@bastion ~]$ ssh ec2-user@ipsec2.{GUID}.internal
+ssh ec2-user@ipsec2.{GUID}.internal
 ----
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[ec2-user@ipsec2 ~]$ sudo su
-[root@ipsec2 ec2-user]# cd
-[root@ipsec2 ~]# dnf install libreswan
-[root@ipsec2 ~]# ipsec initnss
-[root@ipsec2 ~]# ipsec import /tmp/ipsec2.example.com.p12
-
-(Note: The password for PKCS12 file is "secret".)
-
-[root@ipsec2 ~]# rm /tmp/ipsec2.example.com.p12
-[root@ipsec2 ~]# cp /root/oe-cert.conf /etc/ipsec.d/
-[root@ipsec2 ~]# restorecon -Rv /etc/ipsec.d
-[root@ipsec2 ~]# echo "192.168.0.0/24" >> /etc/ipsec.d/policies/private-or-clear
-[root@ipsec2 ~]# echo "192.168.0.54/32" >> /etc/ipsec.d/policies/clear
-[root@ipsec2 ~]# firewall-cmd --add-service=ipsec --permanent
-[root@ipsec2 ~]# firewall-cmd --reload
+sudo su
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+cd
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+dnf install libreswan
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec initnss
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec import /tmp/ipsec2.example.com.p12
+----
++
+TIP: The password for PKCS12 file is "secret".
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+rm /tmp/ipsec2.example.com.p12
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+cp /root/oe-cert.conf /etc/ipsec.d/
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+restorecon -Rv /etc/ipsec.d
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+echo "192.168.0.0/24" >> /etc/ipsec.d/policies/private-or-clear
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+echo "192.168.0.54/32" >> /etc/ipsec.d/policies/clear
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+firewall-cmd --add-service=ipsec --permanent
+----
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+firewall-cmd --reload
 ----
 
 . Edit the `/etc/ipsec.d/oe-cert.conf` and change the default `leftcert=mycert` to `leftcert=ipsec2.example.com` 
@@ -290,14 +379,16 @@ First, you start the IPsec subsystem on both of the hosts.
 
 . Start the IPsec subsystem on *ipsec1.{GUID}.internal*:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ~]# systemctl start ipsec
+systemctl start ipsec
 ----
 
 . Start the IPsec subsystem on *ipsec2.{GUID}.internal*:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec2 ~]# systemctl start ipsec
+systemctl start ipsec
 ----
 +
 . Wait a few seconds for the two hosts to load their IPsec policies.
@@ -306,7 +397,7 @@ First, you start the IPsec subsystem on both of the hosts.
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ~]# ping -c3 ipsec2.{GUID}.internal
+ping -c3 ipsec2.{GUID}.internal
 ----
 +
 The first `ping` may fail depending on the time it takes to set up the IPsec
@@ -314,6 +405,11 @@ connection.
 
 . Examine the system logs in `/var/log/secure`, or you can use one of the
 various status commands available:
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec trafficstatus
+----
 +
 ----
 [root@ipsec1 ~]# ipsec trafficstatus
@@ -341,14 +437,20 @@ Your two nodes now have an IPsec-encrypted mesh network running.
 the `private`, `private-or-clear`, and `clear-or-private` connections (and their
 instances), issue a manual command to see why loading failed:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ~]# ipsec auto --add private
+ipsec auto --add private
 ----
 
 . If there is some kind of failure (such as the group is `private` but the remote end
 is not functioning), do not expect to see a visible IPsec tunnel, but
 examine the results and expect to see the _shunts_ that prevent or allow unencrypted
 traffic on the network:
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+ipsec whack --shuntstatus
+----
 +
 ----
 [root@ipsec1 ~]# ipsec whack --shuntstatus
@@ -371,6 +473,11 @@ you can see it is set to `passthrough`, allowing unencrypted traffic. For the
 
 . Run `ping` on one host and `tcpdump` on the other host to confirm that the
 connection is encrypted:
++
+[%nowrap,source,ini,role=execute,subs=attributes+]
+----
+tcpdump -i ens3 -n esp
+----
 +
 ----
 [root@ipsec1 ~]# tcpdump -i ens3 -n esp
@@ -425,8 +532,9 @@ because otherwise the `rsyslog` or `systemd ratelimit` may cause you to miss mes
 . If everything works as expected, enable the IPsec
 services on your cluster on every startup--on each node run:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[root@ipsec1 ~]# systemctl enable ipsec
+systemctl enable ipsec
 ----
 
 For more information on Opportunistic IPsec, see link:https://libreswan.org/wiki/Main_Page[Opportunistic IPsec^].
