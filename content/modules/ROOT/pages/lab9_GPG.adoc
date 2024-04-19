@@ -113,7 +113,7 @@ In this section, you encrypt and decrypt a document for private use. You begin b
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# gpg2 -e sensitive.txt
+[{USERNAME}@gpg ~]# gpg2 -r labuser -e sensitive.txt
 ----
 +
 You now have a new file entitled `sensitive.txt.gpg`. The `.gpg` extension indicates that it is a file that was encrypted with a GPG key.
