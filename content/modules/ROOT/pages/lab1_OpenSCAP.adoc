@@ -278,7 +278,7 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 ----
 +
 Note that content provided in `scap-security-guide` covers a wide range of security baselines.
-For Red Hat Enterprise Linux 9, profiles like Spanish National Cryptologic Center (CCN) and  Payment Card Industry Data Security Standard (PCI-DSS) profiles are available.
+For Red Hat Enterprise Linux 9, profiles like Spanish National Cryptologic Center STIC (CCN) and Payment Card Industry Data Security Standard (PCI-DSS) profiles are available.
 There are various formats in which this is provided--human-readable HTML guides, SCAP benchmarks, and Ansible remediation playbooks.
 
 . Move to the `content` folder so that you can avoid typing long paths in the subsequent exercises:
@@ -299,7 +299,7 @@ The scanning command must be executed by a privileged user: `root` or using `sud
 The simplest scanner invocation can look like this:
 +
 ----
-oscap xccdf eval --profile ccn_basic ./ssg-rhel9-ds.xml
+[root@openscap content]# oscap xccdf eval --profile ccn_basic ./ssg-rhel9-ds.xml
 ----
 +
 You can omit the profile ID prefix to make the command simpler--the actual ID is `xccdf_org.ssgproject.content_profile_ccn_basic`.
@@ -494,7 +494,7 @@ After making this change, press *Ctrl+X*, then type *y* and press *Enter* in you
 +
 [IMPORTANT]
 ====
-Not all modules utilized by compliance ansible playbooks are part of *ansible-core* package. To allow compliance hardening, these modules are provided in *rhc-worker-playbook* package, supported in the context of *scap-security-guide*-sourced ansible playbooks.
+Not all modules utilized by the compliance ansible playbooks are part of the *ansible-core* package. To allow compliance hardening, these modules are provided in the *rhc-worker-playbook* package, supported in the context of the *scap-security-guide*-sourced ansible playbooks.
 
 Using it on the commandline requires providing environment variable *ANSIBLE_COLLECTIONS_PATH*.
 ====
