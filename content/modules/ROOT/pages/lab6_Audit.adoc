@@ -51,6 +51,7 @@ either as the *root* or *{USERNAME}* user. In each section, you are instructed w
 
 * The *{USERNAME}* user prompt on *audit.{GUID}.internal*:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@audit ~]$
 ----
@@ -63,6 +64,7 @@ either as the *root* or *{USERNAME}* user. In each section, you are instructed w
 
 . To switch user from {USERNAME} to *root*, use *sudo* command:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@audit ~]$ sudo su -
 [root@audit ~]#
@@ -374,6 +376,7 @@ This command lists any events triggered by the pre-defined rules with the `acces
 
 . As *root*, display today's events from the *{USERNAME}* user that match the `perm_mod` key:
 +
+[%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [root@audit ~]# ausearch --start today -i -k perm_mod --uid {USERNAME}
 ----
