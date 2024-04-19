@@ -41,8 +41,8 @@ include::lab6_Audit.adoc[]
 == Lab7: Advanced Intrusion Detection Environment (AIDE)
 include::lab7_AIDE.adoc[]
 
-== Lab8: Single-Sign-on Environment Creation for Linux Servers Using Identity Management in Red Hat Enterprise Linux
-include::lab8_IdM.adoc[]
+// == Lab8: Single-Sign-on Environment Creation for Linux Servers Using Identity Management in Red Hat Enterprise Linux
+// include::lab8_IdM.adoc[]
 
 == Lab9: GNU Privacy Guard (GPG)
 include::lab9_GPG.adoc[]
@@ -55,6 +55,3 @@ include::lab11_cryptopolicies.adoc[]
 
 == Lab12: Session Recording
 include::lab12_SessionRecording.adoc[]
-
-
-
