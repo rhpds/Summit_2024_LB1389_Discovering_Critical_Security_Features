@@ -340,13 +340,17 @@ image:nbde_cockpit_disk_enc.png[window=_blank,link=nbde_cockpit_disk_enc.png]
 +
 image:nbde_cockpit_tang_empty.png[window=_blank,link=nbde_cockpit_tang_empty.png]
 
-. Complete the modal window fields as shown, using *nbde1.{GUID}.internal* as a key server address and *r3dh4t1!* for the existing disk passphrase, then click *Add*:
+. Complete the modal window fields as shown, using *nbde1.{GUID}.internal* as a key server address, then click *Add*:
 +
-image:nbde_cockpit_tang_filled.png[window=_blank,link=nbde_cockpit_tang_filled.png]
+image:nbde_cockpit_tang_keyserver.png[window=_blank,link=nbde_cockpit_tang_keyserver.png]
 
 . After giving the system some time to process the request, click *Trust key*:
 +
 image:nbde_cockpit_tang_confirm.png[window=_blank,link=nbde_cockpit_tang_confirm.png]
+
+. Node does not satisfy all requirements, but Cockpit is able to fix it, click *Fix NBDE support*:
++
+image:nbde_cockpit_tang_fix.png[window=_blank,link=nbde_cockpit_tang_fix.png]
 
 . Examine the results, and note both the disk passphrase and the key server as your keys for the disk:
 +
