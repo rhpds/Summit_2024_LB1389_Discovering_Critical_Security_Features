@@ -28,7 +28,7 @@ You install the *Tang* server on the *NBDE1* server and the Clevis client on *NB
 
 . Log in to the *NBDE1* server as *ec2-user*, and switch users, using sudo, to *root*. If you need the *root* password, it is *r3dh4t1!*. If you are prompted for the disk decryption password, it is also *r3dh4t1!*.
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
 [{USERNAME}@bastion 0 ~]$ ssh nbde1.{GUID}.internal
 [{USERNAME}@nbde1 ~]$ sudo su -
@@ -54,7 +54,7 @@ Because `tangd` uses the `systemd` socket activation mechanism, the server start
 
 . Log out of the *NBDE1* server.
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
 [root@nbde1 ~]# exit
 [{USERNAME}@nbde1 ~]$ exit

@@ -48,7 +48,7 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Log in to the *aide.{GUID}.internal* host:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]$ ssh aide.{GUID}.internal
 ----
@@ -271,7 +271,7 @@ A full list of watch parameters can be found by reviewing the man page.
 . Change the permission on the `/etc/shadow` file and run a scan:
 +
 ----
-[root@aide ~] chmod 0666 /etc/shadow
+[root@aide ~]# chmod 0666 /etc/shadow
 [root@aide ~]# aide --check
 ----
 
@@ -347,7 +347,7 @@ type=SYSCALL msg=audit(04/10/2024 14:47:18.100:2401) : arch=x86_64 syscall=fchmo
 +
 `name` is the object acted upon.
 +
-`auid` is the login ID of the user who made the change (student).
+`auid` is the login ID of the user who made the change (ec2-user).
 +
 `uid` is the login ID of the user who ran the command (root).
 +

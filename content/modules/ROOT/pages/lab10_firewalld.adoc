@@ -56,7 +56,7 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]$ ssh firewalld.{GUID}.internal
-[{USERNAME}@firewalld ~]$ sudo su -
+[ec2-user@firewalld ~]$ sudo su -
 ----
 
 . The lab does not have the firewall enabled by default, so you install it as *root*, enable and start the `firewalld` service, and confirm that the service is both active and enabled:
@@ -227,7 +227,7 @@ While Red Hat^(R)^ Enterprise Linux^(R)^ (RHEL) comes with many preconfigured se
 
 [WARNING]
 ====
-The service files that come preconfigured are located at `/usr/lib/firewalld/service`, and you should never alter these files.
+The service files that come preconfigured are located at `/usr/lib/firewalld/services/`, and you should never alter these files.
 ====
 
 Custom files reside at `/etc/firewalld/services/`. The easiest way to start is to copy a file from the default location to the custom location and then alter it to suit your needs.

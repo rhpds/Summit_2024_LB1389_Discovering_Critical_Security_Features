@@ -56,8 +56,6 @@ Congratulations, now you are in your *text console*.
 
 ifndef::gitlab_hosted[]
 TIP: You can resize this window vertically to increase the documentation or the terminal space. Just drag and move left or right using the vertical bar: image:0-01-resize_window.png[window=_blank,link=0-01-resize_window.png,300,300]
-
-TIP: You can also open a dedicated documentation or terminal window by activating the menu in the top right corner as illustrated by the following image: image:0-01-workshop-menu.png[window=_blank,link=0-01-workshop-menu.png,300,300]
 endif::[]
 
 === Lab-Related Tips

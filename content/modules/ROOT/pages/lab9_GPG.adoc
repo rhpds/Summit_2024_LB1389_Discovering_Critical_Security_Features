@@ -54,16 +54,16 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 
 . Log in to the *gpg.{GUID}.internal* host:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]$ ssh gpg.{GUID}.internal
 ----
 
 . Generate your new key pair as *{USERNAME}* on *gpg.{GUID}.internal*:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# gpg2 --full-generate-key
+[ec2-user@gpg ~]# gpg2 --full-generate-key
 ----
 
 . When asked, enter or provide this information:
@@ -84,10 +84,10 @@ Eventually, the process completes and the new key pair is ready for you to use. 
 
 . Run these commands, which may be useful at a later time when you want to view your keys and fingerprints:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# gpg2 --list-keys
-[{USERNAME}@gpg ~]# gpg2 --fingerprint
+[ec2-user@gpg ~]# gpg2 --list-keys
+[ec2-user@gpg ~]# gpg2 --fingerprint
 ----
 +
 The contents of your key is stored in your home directory in the file `.gnupg`. Even if someone were to compromise your computer, this would be of no use to them as long as your passphrase is sufficiently hard to crack. That said, always maintain a backup.
@@ -97,49 +97,49 @@ In this section, you encrypt and decrypt a document for private use. You begin b
 
 . Type the following to create a document with sensitive information:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# echo “I love Red Hat” > sensitive.txt
+[ec2-user@gpg ~]# echo “I love Red Hat” > sensitive.txt
 ----
 
 . Verify that you can read the document in its unencrypted format:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# cat sensitive.txt
+[ec2-user@gpg ~]# cat sensitive.txt
 ----
 
 . Encrypt the file by typing the following command and, when asked, enter the user ID you used when creating your key (in our case *labuser*, followed by a carriage return to complete the task:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# gpg2 -r labuser -e sensitive.txt
+[ec2-user@gpg ~]# gpg2 -r labuser -e sensitive.txt
 ----
 +
 You now have a new file entitled `sensitive.txt.gpg`. The `.gpg` extension indicates that it is a file that was encrypted with a GPG key.
 
 . Verify the encryption:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# cat sensitive.txt.gpg
+[ec2-user@gpg ~]# cat sensitive.txt.gpg
 ----
 Note that the output is encrypted and cannot be read.
 
 . Invoke the following command, which prompts you for the passphrase you created earlier to read the file:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# gpg2 -d sensitive.txt.gpg
+[ec2-user@gpg ~]# gpg2 -d sensitive.txt.gpg
 ----
 
 . Delete the original file and then recreate it in its unencrypted format from the encrypted file:
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@gpg ~]# rm sensitive.txt
-[{USERNAME}@gpg ~]# gpg2 sensitive.txt.gpg
-[{USERNAME}@gpg ~]# ls -l sensitive*
+[ec2-user@gpg ~]# rm sensitive.txt
+[ec2-user@gpg ~]# gpg2 sensitive.txt.gpg
+[ec2-user@gpg ~]# ls -l sensitive*
 ----
 +
 You now have a new copy of your original file.
