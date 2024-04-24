@@ -50,12 +50,12 @@ ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 +
 [%nowrap,source,ini,role=execute,subs=attributes+]
 ----
-[localhost ~]$ ssh selinux1.{GUID}.internal
+[{USERNAME}@bastion ~]$ ssh selinux1.{GUID}.internal
 ----
 
 . Log as root
 +
-[%nowrap,source,ini,role=execute,subs=attributes+]
+[%nowrap,source,ini,subs=attributes+]
 ----
 [{USERNAME}@selinux1]$ sudo -i
 [root@selinux1]
@@ -111,7 +111,7 @@ Because there is no allow rule for **container_t** to access */home* and access 
 
 The container runs with **container_t** type and **c447,c628** categories(categories are randomly generated so on your system numbers are different):
 
-NOTE: Please run following commands in second opened terminal
+NOTE: Please run following commands in the *second* opened terminal
 
 ----
 [root@selinux1]# ps -efZ | grep container_t
@@ -184,6 +184,8 @@ Let's exit the running container and start new one.
 ----
 
 The container is now running with **my_container.process** type:
+
+NOTE: In case of the session timeout, you have to first stop the old container with command **podman stop 37a3635afb8f**
 
 ----
 [root@selinux1]# ps -efZ | grep my_container.process

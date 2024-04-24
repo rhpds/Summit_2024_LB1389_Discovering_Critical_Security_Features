@@ -46,7 +46,7 @@ Versions of installed packages may not be up-to-date, but this does not affect t
 [%nowrap,source,ini,subs=attributes+]
 ----
 [{USERNAME}@bastion ~]# ssh openscap.{GUID}.internal
-[{USERNAME}@openscap ~]$ sudo su
+[ec2-user@openscap ~]$ sudo su
 # the tool that performs the scanning
 [root@openscap]# dnf install openscap-scanner
 # project that brings in security policies we will load and test agains
@@ -266,7 +266,7 @@ TIP: Use `Ctrl+Shift+V` to paste in the terminal.
 +
 [%nowrap,source,ini,subs=attributes+]
 ----
-[{USERNAME}@openscap ~]$ sudo su
+[ec2-user@openscap ~]$ sudo su
 ----
 
 . Examine the compliance content provided by `scap-security-guide`:

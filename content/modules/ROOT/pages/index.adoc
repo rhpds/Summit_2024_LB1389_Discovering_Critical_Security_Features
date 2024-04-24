@@ -23,35 +23,35 @@ include::lab1_OpenSCAP.adoc[]
 // == Lab 2 Part 2: How to generate tailored SELinux policies for containers
 // include::lab2_SELinux_part2_udica.adoc[]
 
-== Lab 2: How to generate tailored SELinux policies for containers
+== Lab2: How to generate tailored SELinux policies for containers
 include::lab2_SELinux_part2_udica.adoc[]
 
 == Lab3: Secure Decryption of LUKS-Encrypted Volumes Using Network Bound Disk Encryption (NBDE)
 include::lab3_NBDE.adoc[]
 
-== Lab4: Cloud Encryption Using RHEL Opportunistic IPsec
-include::lab4_IPsec.adoc[]
+// == Lab4: Cloud Encryption Using RHEL Opportunistic IPsec
+// include::lab4_IPsec.adoc[]
 
 // == Lab5: USBGuard
 // include::lab5_USBGuard.adoc[]
 
-== Lab6: Auditing on Red Hat Enterprise Linux 9
+== Lab4: Auditing on Red Hat Enterprise Linux 9
 include::lab6_Audit.adoc[]
 
-== Lab7: Advanced Intrusion Detection Environment (AIDE)
+== Lab5: Advanced Intrusion Detection Environment (AIDE)
 include::lab7_AIDE.adoc[]
 
 // == Lab8: Single-Sign-on Environment Creation for Linux Servers Using Identity Management in Red Hat Enterprise Linux
 // include::lab8_IdM.adoc[]
 
-== Lab9: GNU Privacy Guard (GPG)
+== Lab6: GNU Privacy Guard (GPG)
 include::lab9_GPG.adoc[]
 
-== Lab10: Firewalld
+== Lab7: Firewalld
 include::lab10_firewalld.adoc[]
 
-== Lab11: Crypto Policies
-include::lab11_cryptopolicies.adoc[]
+// == Lab11: Crypto Policies
+// include::lab11_cryptopolicies.adoc[]
 
-== Lab12: Session Recording
-include::lab12_SessionRecording.adoc[]
+// == Lab12: Session Recording
+// include::lab12_SessionRecording.adoc[]
