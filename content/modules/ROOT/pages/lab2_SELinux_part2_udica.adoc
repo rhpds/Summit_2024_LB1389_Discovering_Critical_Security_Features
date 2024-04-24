@@ -61,7 +61,7 @@ ssh -o "ServerAliveInterval 30" {USERNAME}@{BASTION_IP_ADDRESS}
 [root@selinux1]
 ----
 
-NOTE: Repeat steps #1-2 above on a second terminal (this terminal window will also be connected to *rhel8selinux1.{GUID}.internal*) via bookbag (click in top right corner for new terminal)
+NOTE: It's recommended to open a terminal on your laptop and SSH connect to the bastion, and then to the SELinux node. Since you need to have two terminals active to complete all the steps in this lab, please repeat steps #1-2 above on a second terminal.
 
 The first step is to install udica and container runtime engine, in this case the _podman_ engine will be used, and the rest of dependencies.
 
